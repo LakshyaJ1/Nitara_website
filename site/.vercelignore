@@ -1,0 +1,6 @@
+# source and tooling are not served
+src/
+tools/
+img/provenance.json
+img/looks.json
+img/nitara-logo-traced.svg

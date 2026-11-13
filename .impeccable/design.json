@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T21:47:31+00:00",
+  "title": "Design System: nitara",
+  "extensions": {
+    "colorMeta": {
+      "charcoal-print": {
+        "role": "neutral",
+        "displayName": "Charcoal Print",
+        "canonical": "#221F1D",
+        "tonalRamp": [
+          "#0D0B09",
+          "#262322",
+          "#423F3D",
+          "#605D5B",
+          "#837F7D",
+          "#A7A4A1",
+          "#CDCAC7",
+          "#F1EEEB"
+        ]
+      },
+      "madder": {
+        "role": "primary",
+        "displayName": "Madder Red",
+        "canonical": "#A42E28",
+        "tonalRamp": [
+          "#320000",
+          "#550000",
+          "#790E0E",
+          "#9D352E",
+          "#C65A50",
+          "#EF7F73",
+          "#FFA598",
+          "#FFC9BB"
+        ]
+      },
+      "madder-deep": {
+        "role": "primary",
+        "displayName": "Deep Madder",
+        "canonical": "#7E211C",
+        "tonalRamp": [
+          "#2C0000",
+          "#4E0000",
+          "#701F1A",
+          "#943F37",
+          "#BB6359",
+          "#E4877C",
+          "#FFADA1",
+          "#FFD1C4"
+        ]
+      },
+      "turmeric": {
+        "role": "secondary",
+        "displayName": "Turmeric Thread",
+        "canonical": "#DFA12C",
+        "tonalRamp": [
+          "#250000",
+          "#431300",
+          "#633200",
+          "#845100",
+          "#AA7500",
+          "#D09937",
+          "#F8C061",
+          "#FFE486"
+        ]
+      },
+      "manila": {
+        "role": "tertiary",
+        "displayName": "Undyed Manila",
+        "canonical": "#D6AC67",
+        "tonalRamp": [
+          "#1E0200",
+          "#3A1C00",
+          "#593800",
+          "#795716",
+          "#9D7A3D",
+          "#C39E61",
+          "#EBC486",
+          "#FFE8A9"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "#F3EDE3",
+        "tonalRamp": [
+          "#0E0B05",
+          "#27231D",
+          "#433F38",
+          "#625D55",
+          "#848077",
+          "#A9A49B",
+          "#CFCAC1",
+          "#F3EEE5"
+        ]
+      },
+      "print-paper": {
+        "role": "neutral",
+        "displayName": "Print Paper",
+        "canonical": "#FBF7EF",
+        "tonalRamp": [
+          "#0D0B07",
+          "#26241E",
+          "#423F3A",
+          "#605D57",
+          "#838079",
+          "#A7A49D",
+          "#CECAC3",
+          "#F2EEE7"
+        ]
+      },
+      "indigo-ink": {
+        "role": "neutral",
+        "displayName": "Indigo Ink",
+        "canonical": "#1A2238",
+        "tonalRamp": [
+          "#050A1B",
+          "#1C2337",
+          "#373F55",
+          "#545D74",
+          "#768098",
+          "#9AA4BE",
+          "#C0CAE5",
+          "#E3EEFF"
+        ]
+      },
+      "indigo": {
+        "role": "neutral",
+        "displayName": "Indigo",
+        "canonical": "#1B2440",
+        "tonalRamp": [
+          "#04091F",
+          "#1A233C",
+          "#353F5A",
+          "#525D7A",
+          "#747F9E",
+          "#98A4C4",
+          "#BDCAEB",
+          "#E1EEFF"
+        ]
+      },
+      "indigo-deep": {
+        "role": "neutral",
+        "displayName": "Deep Indigo",
+        "canonical": "#121830",
+        "tonalRamp": [
+          "#06091D",
+          "#1C2339",
+          "#373F57",
+          "#555D77",
+          "#777F9B",
+          "#9AA4C0",
+          "#C0CAE8",
+          "#E4EEFF"
+        ]
+      },
+      "brass": {
+        "role": "tertiary",
+        "displayName": "Brass",
+        "canonical": "#B8913F",
+        "tonalRamp": [
+          "#1D0200",
+          "#3A1C00",
+          "#583900",
+          "#785700",
+          "#9D7A32",
+          "#C29F58",
+          "#EAC57E",
+          "#FFE9A1"
+        ]
+      },
+      "muted-on-charcoal": {
+        "role": "neutral",
+        "displayName": "Muted on Charcoal",
+        "canonical": "#C9C3BA",
+        "tonalRamp": [
+          "#0E0B06",
+          "#27231D",
+          "#433F38",
+          "#625D56",
+          "#847F78",
+          "#A9A49C",
+          "#CFCAC2",
+          "#F3EEE5"
+        ]
+      },
+      "muted-on-manila": {
+        "role": "neutral",
+        "displayName": "Muted on Manila",
+        "canonical": "#4A3F2F",
+        "tonalRamp": [
+          "#110901",
+          "#2B2215",
+          "#483E30",
+          "#665C4D",
+          "#8A7E6F",
+          "#AEA392",
+          "#D5C9B8",
+          "#F9EDDB"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (Rozha One)",
+        "purpose": "Chapter headings with a drawn running stitch; medium and small steps."
+      },
+      "headline": {
+        "displayName": "Cover Tagline",
+        "purpose": "Cover tagline; second clause in turmeric."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Tag titles, timeline and swatch headings, pull quotes, ledger figures."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Opening paragraph of a chapter, max 36ch."
+      },
+      "body": {
+        "displayName": "Body (Hanken Grotesk)",
+        "purpose": "Reading text, max 66ch; secondary copy in the ground's muted colour."
+      },
+      "label": {
+        "displayName": "Label (Courier Prime)",
+        "purpose": "Buttons, style codes, fact terms, form labels, spec sheets."
+      },
+      "hand": {
+        "displayName": "Hand (Kalam)",
+        "purpose": "Designer annotations, sketch and badge captions, timeline dates, Devanagari chapter words."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tag-lift",
+        "value": "0 6px 16px -8px rgba(0,0,0,.5)",
+        "purpose": "Small manila tags and the stamp button."
+      },
+      {
+        "name": "paper-on-table",
+        "value": "0 22px 40px -22px rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.12)",
+        "purpose": "Pinned paper, prints, care label, morph stage."
+      },
+      {
+        "name": "sheet-drop",
+        "value": "0 30px 50px -30px rgba(0,0,0,.7)",
+        "purpose": "Spec sheet and enquiry tag on dark grounds."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-handled",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Every handled object: tags, stamps, prints, nav, links."
+      },
+      {
+        "name": "tag-settle",
+        "value": "2.2s damped swing -9deg, 5, -2.4, 1, 0",
+        "purpose": "Chapter tag arrival."
+      },
+      {
+        "name": "stitch-draw",
+        "value": "1.6s ease-handled, 0.1s delay",
+        "purpose": "Running stitch under headings on reveal."
+      },
+      {
+        "name": "wordmark-stitch",
+        "value": "needle travel 2.8s power1.inOut, satin fill 1.2s power2.out",
+        "purpose": "Cover wordmark stitching itself."
+      },
+      {
+        "name": "stamp-press",
+        "value": "scale 2.2 to 1, 0.45s back.out(2.2)",
+        "purpose": "Ink stamp landing on the spec sheet."
+      },
+      {
+        "name": "scroll-scrub",
+        "value": "ScrollTrigger scrub 0.6 with Lenis lerp 0.11",
+        "purpose": "Sketch-to-sample wipe, horizontal tracks, cover parallax."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animations and transitions to .001s; Lenis off; GSAP paused",
+        "purpose": "prefers-reduced-motion and the footer motion toggle."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "menu",
+        "value": "1100px"
+      },
+      {
+        "name": "single-column",
+        "value": "820px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Stamp Button",
+      "kind": "button",
+      "refersTo": "button-stamp",
+      "description": "Primary action as a rubber stamp; tilted at rest, straightens on hover.",
+      "html": "<a class=\"ds-stamp\" href=\"#\">Work with us</a>",
+      "css": ".ds-stamp{display:inline-flex;align-items:center;font-family:'Courier Prime','Courier New',monospace;font-weight:700;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;color:#F3EDE3;background:#A42E28;text-decoration:none;padding:1.05em 1.6em;border-radius:4px;border:2px solid rgba(243,237,227,.4);outline:1px solid rgba(243,237,227,.6);outline-offset:-7px;box-shadow:0 6px 18px -8px rgba(0,0,0,.55);transform:rotate(-1.5deg);transition:transform .5s cubic-bezier(.16,1,.3,1),background-color .3s}.ds-stamp:hover{transform:rotate(0) scale(1.03);background:#7E211C}.ds-stamp:active{transform:scale(.97)}.ds-stamp:focus-visible{outline:2px dashed #DFA12C;outline-offset:4px}"
+    },
+    {
+      "name": "Thread Link",
+      "kind": "button",
+      "refersTo": "button-thread",
+      "description": "Secondary action with a dashed thread underline in the ground's thread colour.",
+      "html": "<div class=\"ds-dark\"><a class=\"ds-thread\" href=\"#\">Walk the rail <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\"><path d=\"M4 12h15M13 6l6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/></svg></a></div>",
+      "css": ".ds-dark{background:#221F1D;color:#F3EDE3;padding:24px}.ds-thread{display:inline-flex;align-items:center;gap:.5em;font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:500;color:inherit;text-decoration:none;padding-bottom:4px;background:repeating-linear-gradient(90deg,#DFA12C 0 8px,transparent 8px 13px) left bottom/100% 2px no-repeat;transition:gap .4s cubic-bezier(.16,1,.3,1)}.ds-thread:hover{gap:.8em}.ds-thread:focus-visible{outline:2px dashed #DFA12C;outline-offset:4px}"
+    },
+    {
+      "name": "For Buyers Nav Tag",
+      "kind": "nav",
+      "refersTo": "nav-buyers-tag",
+      "description": "Manila label-tail tag with a brass eyelet in the fixed nav.",
+      "html": "<a class=\"ds-buyers\" href=\"#\"><span class=\"ds-eyelet\"></span>For buyers</a>",
+      "css": ".ds-buyers{display:inline-flex;align-items:center;gap:10px;background:#D6AC67;color:#1A2238;text-decoration:none;font-family:'Courier Prime',monospace;font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px 10px 12px;border-radius:3px 14px 14px 3px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);transform:rotate(2deg);transition:transform .5s cubic-bezier(.16,1,.3,1)}.ds-buyers:hover{transform:rotate(0)}.ds-buyers:focus-visible{outline:2px dashed #DFA12C;outline-offset:4px}.ds-eyelet{width:10px;height:10px;border-radius:50%;background:#121830;box-shadow:0 0 0 3px #B8913F}"
+    },
+    {
+      "name": "Chapter Hang Tag",
+      "kind": "custom",
+      "refersTo": "chapter-tag",
+      "description": "Manila tag with chamfered top, brass eyelet, inner dashed stitch, Devanagari chapter word in Kalam and Rozha title.",
+      "html": "<div class=\"ds-tag\"><span class=\"ds-tag-eye\"></span><p class=\"ds-tag-hi\" lang=\"hi\">कहानी</p><p class=\"ds-tag-title\">The story</p></div>",
+      "css": ".ds-tag{position:relative;width:200px;aspect-ratio:5/8.4;background:#D6AC67;color:#1A2238;clip-path:polygon(22% 0,78% 0,100% 12%,100% 100%,0 100%,0 12%);padding:26% 11% 9%;display:flex;flex-direction:column;justify-content:flex-end;transform:rotate(-2deg);transition:transform 1s cubic-bezier(.16,1,.3,1)}.ds-tag:hover{transform:rotate(0)}.ds-tag::after{content:'';position:absolute;inset:8px;border:1.5px dashed rgba(26,34,56,.3);clip-path:inherit}.ds-tag-eye{position:absolute;left:50%;top:7%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#121830;box-shadow:0 0 0 4px #B8913F}.ds-tag-hi{margin:0;font-family:Kalam,cursive;font-weight:700;font-size:1.4rem;line-height:1;color:#A42E28}.ds-tag-title{margin:.1em 0 0;font-family:'Rozha One',Georgia,serif;font-size:2rem;line-height:.95}"
+    },
+    {
+      "name": "Enquiry Field",
+      "kind": "input",
+      "refersTo": "field-input",
+      "description": "Chalk-washed field with a dashed bottom stitch on the manila enquiry tag.",
+      "html": "<div class=\"ds-manila\"><label class=\"ds-label\" for=\"ds-n\">Your name</label><input class=\"ds-input\" id=\"ds-n\" placeholder=\"Your name\"></div>",
+      "css": ".ds-manila{background:#D6AC67;color:#1A2238;padding:24px}.ds-label{display:block;font-family:'Courier Prime',monospace;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}.ds-input{width:100%;font:inherit;font-family:'Hanken Grotesk',Arial,sans-serif;color:#1A2238;background:rgba(243,237,227,.45);border:0;border-bottom:2px dashed rgba(26,34,56,.55);border-radius:3px 3px 0 0;padding:10px 10px 8px;transition:background-color .3s,border-color .3s}.ds-input:hover{background:rgba(243,237,227,.7)}.ds-input:focus{outline:none;background:#F3EDE3;border-bottom-color:#A42E28}"
+    },
+    {
+      "name": "Brief Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Dashed pill that fills indigo when selected.",
+      "html": "<div class=\"ds-manila\"><label class=\"ds-chip\"><input type=\"checkbox\" checked><span>Embroidery</span></label> <label class=\"ds-chip\"><input type=\"checkbox\"><span>Print</span></label></div>",
+      "css": ".ds-manila{background:#D6AC67;color:#1A2238;padding:24px}.ds-chip input{position:absolute;opacity:0;width:1px;height:1px}.ds-chip span{display:inline-block;padding:7px 12px;font-family:'Hanken Grotesk',Arial,sans-serif;font-size:.88rem;border:1.5px dashed rgba(26,34,56,.5);border-radius:30px;cursor:pointer;transition:background-color .25s,color .25s}.ds-chip span:hover{border-color:#1A2238}.ds-chip input:checked+span{background:#1B2440;color:#F3EDE3;border-style:solid;border-color:#1B2440}.ds-chip input:focus-visible+span{outline:2px dashed #A42E28;outline-offset:3px}"
+    },
+    {
+      "name": "Spec Sheet",
+      "kind": "card",
+      "refersTo": "spec-sheet",
+      "description": "Chalk typed sheet with dashed row stitches and a madder ink stamp.",
+      "html": "<div class=\"ds-sheet\"><p class=\"ds-sheet-t\">Machine sheet</p><table><tr><td>Cutting</td><td>Auto laser cutting, 1600 × 1900 mm</td><td class=\"n\">02</td></tr><tr><td>Sewing</td><td>Jack sewing machines</td><td class=\"n\">290</td></tr></table><span class=\"ds-sheet-st\">Checked</span></div>",
+      "css": ".ds-sheet{position:relative;background:#F3EDE3;color:#1A2238;font-family:'Courier Prime',monospace;padding:24px 24px 80px;box-shadow:0 30px 50px -30px rgba(0,0,0,.7);transform:rotate(-.6deg)}.ds-sheet-t{margin:0 0 4px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border-bottom:2px solid #1A2238;padding-bottom:10px}.ds-sheet table{width:100%;border-collapse:collapse;font-size:.8rem}.ds-sheet td{padding:8px 8px 8px 0;border-top:1px dashed rgba(26,34,56,.3)}.ds-sheet td:first-child{color:#A42E28}.ds-sheet .n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}.ds-sheet-st{position:absolute;right:8%;bottom:22px;font-weight:700;font-size:1.4rem;letter-spacing:.2em;text-transform:uppercase;color:#A42E28;border:3px solid #A42E28;border-radius:6px;padding:4px 14px;transform:rotate(-12deg);opacity:.78}"
+    },
+    {
+      "name": "Pegged Print",
+      "kind": "custom",
+      "refersTo": "print",
+      "description": "Photographic print on paper, pegged to the line, tilted; Kalam caption and madder style code.",
+      "html": "<div class=\"ds-turmeric\"><a class=\"ds-print\" href=\"#\"><span class=\"ds-peg\"></span><span class=\"ds-photo\"></span><span class=\"ds-cap\"><b>nit72187</b><i>schiffli eyelet maxi</i></span></a></div>",
+      "css": ".ds-turmeric{background:#DFA12C;padding:40px 24px}.ds-print{position:relative;display:inline-block;background:#FBF7EF;padding:12px 12px 0;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.18),0 26px 36px -22px rgba(0,0,0,.55);transform:rotate(2deg);transform-origin:50% 0;transition:transform .8s cubic-bezier(.16,1,.3,1),box-shadow .5s}.ds-print:hover{transform:rotate(0);box-shadow:0 1px 2px rgba(0,0,0,.18),0 40px 50px -26px rgba(0,0,0,.6)}.ds-print:focus-visible{outline:2px dashed #1B2440;outline-offset:4px}.ds-peg{position:absolute;left:50%;top:-30px;width:14px;height:54px;margin-left:-7px;border-radius:3px;background:linear-gradient(90deg,#C9A574,#E6CDA4 45%,#B88F5C)}.ds-photo{display:block;width:180px;height:240px;background:#EFE8DA}.ds-cap{display:flex;justify-content:space-between;gap:12px;padding:10px 2px 12px;color:#1A2238}.ds-cap b{font-family:'Courier Prime',monospace;font-size:.82rem;color:#A42E28}.ds-cap i{font-style:normal;font-family:Kalam,cursive;font-size:1.05rem}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sampling Room",
+    "overview": "nitara is told as a sampling room: every chapter is a hang tag strung on one cotton string, story on the front and buyer facts on the back, and every ground is a cloth rather than a paint. The page is a long, single scroll of dye-bath chapters (charcoal print, madder, manila, turmeric) with a sticky manila tag hanging in a left column and the story beside it. Everything that holds information is a made object from the trade: tags with brass eyelets, a chalk spec sheet with a rubber stamp, a woven care label, photographic prints pegged to a line, a sketchbook page pinned with brass. The interface is tactile and slightly off-square; nothing sits at exactly zero degrees unless it is being touched.\n\nThe dark ground is the client's own charcoal antique floral print (madder and indigo flowers on near-black), darkened under an 80 to 90 percent charcoal veil so it reads as texture, never pattern. It carries the cover cloth, the dark chapters and the footer, and its printed border band is the seam that closes the cover. The light grounds carry a grayscale linen weave at 32 percent overlay so they read as dyed cotton.\n\nDensity is editorial and generous: one idea per chapter, a fast factual layer under the expressive one (codes, machine counts, certifications), and the designer's own handwriting in the margins.",
+    "keyCharacteristics": [
+      "Chapter grounds are dye baths; the dark ground is the client's charcoal floral print.",
+      "Information lives on objects from the garment trade: tags, stamps, spec sheets, care labels, pegged prints.",
+      "Four voices of type: Rozha One display, Hanken Grotesk text, Courier Prime codes, Kalam handwriting.",
+      "Running stitches (dashed rules) replace solid dividers everywhere.",
+      "Small rotations (roughly -2 to +2 degrees) on every handled object; straightening is the hover state."
+    ],
+    "rules": [
+      {
+        "name": "The Dye Bath Rule",
+        "body": "A chapter takes one ground from the four baths (charcoal print, madder, manila, turmeric) and re-points its thread colour to match: turmeric on charcoal, chalk on madder, madder on manila, indigo on turmeric. Never a gradient between grounds, never a white page.",
+        "section": "colors"
+      },
+      {
+        "name": "The Thread Follows the Ground Rule",
+        "body": "Rules, stitch underlines, timeline lines and link underlines use the ground's thread variable, not a fixed colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Four Hands Rule",
+        "body": "Each face has one job: Rozha speaks, Hanken explains, Courier records, Kalam annotates. Kalam is never used for headings or body copy, and Courier never for prose.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lying-Flat Rule",
+        "body": "Every shadow falls downward with a negative spread, as from overhead studio light. No glows, no hard offset shadows, no coloured shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put every chapter on one dye-bath ground and point its thread colour at the matching ink.",
+      "Do carry facts on trade objects: tags, stamps, spec sheets, care labels, codes in Courier Prime.",
+      "Do tilt handled objects between about -2 and +2 degrees and straighten them on hover.",
+      "Do draw dividers as dashed running stitches in the ground's thread colour.",
+      "Do keep the charcoal print under a charcoal veil of at least 80 percent so text on it holds contrast.",
+      "Do use Kalam only for the designer's annotations and the Devanagari chapter words."
+    ],
+    "donts": [
+      "Don't use a white page, a single centred campaign photo, or a serif-on-white luxury-label layout.",
+      "Don't draw solid hairline dividers or generic rounded cards; use stitches and trade objects.",
+      "Don't use glows, coloured shadows or hard offset shadows; shadows fall soft and downward.",
+      "Don't add small uppercase kickers above headings; the chapter word lives on the tag.",
+      "Don't autoplay motion that cannot be paused; scroll-linked effects scrub, and reduced motion stills everything."
+    ]
+  }
+}

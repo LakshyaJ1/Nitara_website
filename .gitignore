@@ -1,0 +1,25 @@
+# --- large client originals (kept locally, never in git) ---
+*.pdf
+*.mp4
+!site/img/video/*.mp4
+Charcoal antique floral remnant print copy.jpg
+Nitara_Poster_60cm_300dpi_Enlarged.png
+wetransfer_*/
+assets/
+original_site/
+research/
+
+# --- local working files, deploy copies, credentials ---
+.tmp/
+coutureacraft/
+.vercel/
+.impeccable/config.local.json
+.impeccable/review/
+.impeccable/decision/
+.impeccable/build/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.impeccable/questions/

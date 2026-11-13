@@ -1,0 +1,592 @@
+{
+ "look/nit72118.webp": {
+  "source": ".tmp/lookbook/nit72118.jpg",
+  "note": "crop of company profile PDF page 8 (nit72118)",
+  "size": [
+   657,
+   1025
+  ]
+ },
+ "look/nit72118-detail.webp": {
+  "source": ".tmp/lookbook/nit72118-detail.jpg",
+  "note": "crop of company profile PDF page 8 (nit72118)",
+  "size": [
+   673,
+   1025
+  ]
+ },
+ "look/nit72120.webp": {
+  "source": ".tmp/lookbook/nit72120.jpg",
+  "note": "crop of company profile PDF page 9 (nit72120)",
+  "size": [
+   666,
+   1025
+  ]
+ },
+ "look/nit72121.webp": {
+  "source": ".tmp/lookbook/nit72121.jpg",
+  "note": "crop of company profile PDF page 9 (nit72121)",
+  "size": [
+   673,
+   1025
+  ]
+ },
+ "look/nit72148.webp": {
+  "source": ".tmp/lookbook/nit72148.jpg",
+  "note": "crop of company profile PDF page 10 (nit72148)",
+  "size": [
+   1100,
+   953
+  ]
+ },
+ "look/nit72151.webp": {
+  "source": ".tmp/lookbook/nit72151.jpg",
+  "note": "crop of company profile PDF page 11 (nit72151)",
+  "size": [
+   1100,
+   1017
+  ]
+ },
+ "look/nit72155.webp": {
+  "source": ".tmp/lookbook/nit72155.jpg",
+  "note": "crop of company profile PDF page 12 (nit72155)",
+  "size": [
+   566,
+   1025
+  ]
+ },
+ "look/nit72156.webp": {
+  "source": ".tmp/lookbook/nit72156.jpg",
+  "note": "crop of company profile PDF page 12 (nit72156)",
+  "size": [
+   542,
+   1025
+  ]
+ },
+ "look/nit72159.webp": {
+  "source": ".tmp/lookbook/nit72159.jpg",
+  "note": "crop of company profile PDF page 13 (nit72159)",
+  "size": [
+   606,
+   1025
+  ]
+ },
+ "look/nit72159-b.webp": {
+  "source": ".tmp/lookbook/nit72159-b.jpg",
+  "note": "crop of company profile PDF page 13 (nit72159)",
+  "size": [
+   700,
+   1025
+  ]
+ },
+ "look/nit72182.webp": {
+  "source": ".tmp/lookbook/nit72182.jpg",
+  "note": "crop of company profile PDF page 14 (nit72182)",
+  "size": [
+   1100,
+   999
+  ]
+ },
+ "look/nit72183.webp": {
+  "source": ".tmp/lookbook/nit72183.jpg",
+  "note": "crop of company profile PDF page 15 (nit72183)",
+  "size": [
+   654,
+   1022
+  ]
+ },
+ "look/nit72184.webp": {
+  "source": ".tmp/lookbook/nit72184.jpg",
+  "note": "crop of company profile PDF page 15 (nit72184)",
+  "size": [
+   665,
+   1022
+  ]
+ },
+ "look/nit72186.webp": {
+  "source": ".tmp/lookbook/nit72186.jpg",
+  "note": "crop of company profile PDF page 16 (nit72186)",
+  "size": [
+   577,
+   1025
+  ]
+ },
+ "look/nit72187.webp": {
+  "source": ".tmp/lookbook/nit72187.jpg",
+  "note": "crop of company profile PDF page 16 (nit72187)",
+  "size": [
+   649,
+   1025
+  ]
+ },
+ "look/nit72189.webp": {
+  "source": ".tmp/lookbook/nit72189.jpg",
+  "note": "crop of company profile PDF page 17 (nit72189)",
+  "size": [
+   503,
+   1025
+  ]
+ },
+ "look/nit72198.webp": {
+  "source": ".tmp/lookbook/nit72198.jpg",
+  "note": "crop of company profile PDF page 17 (nit72198)",
+  "size": [
+   573,
+   1025
+  ]
+ },
+ "look/nit72186-b.webp": {
+  "source": ".tmp/lookbook/nit72186-b.jpg",
+  "note": "crop of company profile PDF page 18 (nit72186)",
+  "size": [
+   645,
+   1022
+  ]
+ },
+ "look/nit72187-b.webp": {
+  "source": ".tmp/lookbook/nit72187-b.jpg",
+  "note": "crop of company profile PDF page 18 (nit72187)",
+  "size": [
+   649,
+   1022
+  ]
+ },
+ "look/nit72189-b.webp": {
+  "source": ".tmp/lookbook/nit72189-b.jpg",
+  "note": "crop of company profile PDF page 19 (nit72189)",
+  "size": [
+   654,
+   1022
+  ]
+ },
+ "look/nit72198-b.webp": {
+  "source": ".tmp/lookbook/nit72198-b.jpg",
+  "note": "crop of company profile PDF page 19 (nit72198)",
+  "size": [
+   665,
+   1022
+  ]
+ },
+ "look/nit72199.webp": {
+  "source": ".tmp/lookbook/nit72199.jpg",
+  "note": "crop of company profile PDF page 20 (nit72199)",
+  "size": [
+   478,
+   1025
+  ]
+ },
+ "look/nit7224.webp": {
+  "source": ".tmp/lookbook/nit7224.jpg",
+  "note": "crop of company profile PDF page 20 (nit7224)",
+  "size": [
+   808,
+   1025
+  ]
+ },
+ "look/nit72226.webp": {
+  "source": ".tmp/lookbook/nit72226.jpg",
+  "note": "crop of company profile PDF page 21 (nit72226)",
+  "size": [
+   1100,
+   835
+  ]
+ },
+ "look/nit72228.webp": {
+  "source": ".tmp/lookbook/nit72228.jpg",
+  "note": "crop of company profile PDF page 22 (nit72228)",
+  "size": [
+   1100,
+   959
+  ]
+ },
+ "hero/embroidery-portrait.webp": {
+  "source": "assets/campaign/campaign-07.jpg",
+  "note": "old-site campaign original, full frame",
+  "size": [
+   1601,
+   2400
+  ]
+ },
+ "hero/embroidery-macro.webp": {
+  "source": "assets/campaign/campaign-07.jpg",
+  "note": "old-site campaign original, embroidery crop",
+  "size": [
+   2400,
+   2194
+  ]
+ },
+ "swatch/hand-embroidery.webp": {
+  "source": ".tmp/lookbook/nit72118-detail.jpg",
+  "note": "hand embroidery, nit72118",
+  "size": [
+   471,
+   389
+  ]
+ },
+ "swatch/schiffli-eyelet.webp": {
+  "source": ".tmp/lookbook/nit72187-b.jpg",
+  "note": "schiffli/eyelet, nit72187",
+  "size": [
+   325,
+   306
+  ]
+ },
+ "swatch/chikan.webp": {
+  "source": ".tmp/lookbook/nit72189-b.jpg",
+  "note": "chikan, nit72189",
+  "size": [
+   327,
+   358
+  ]
+ },
+ "swatch/botanical-print.webp": {
+  "source": ".tmp/lookbook/nit72183.jpg",
+  "note": "digital print, nit72183",
+  "size": [
+   360,
+   409
+  ]
+ },
+ "swatch/tie-dye.webp": {
+  "source": ".tmp/lookbook/nit72186-b.jpg",
+  "note": "tie & dye, nit72186",
+  "size": [
+   355,
+   409
+  ]
+ },
+ "swatch/block-print.webp": {
+  "source": ".tmp/lookbook/nit72156.jpg",
+  "note": "block print, nit72156",
+  "size": [
+   352,
+   410
+  ]
+ },
+ "swatch/ombre.webp": {
+  "source": ".tmp/lookbook/nit72159.jpg",
+  "note": "ombre dye, nit72159",
+  "size": [
+   485,
+   410
+  ]
+ },
+ "swatch/cordwork.webp": {
+  "source": "assets/collections/vintage-ss2018/vintage-07.jpg",
+  "note": "cord embroidery, vintage SS2018",
+  "size": [
+   640,
+   778
+  ]
+ },
+ "swatch/cutwork.webp": {
+  "source": "assets/collections/vintage-ss2018/vintage-03.jpg",
+  "note": "cutwork hem, vintage SS2018",
+  "size": [
+   794,
+   1000
+  ]
+ },
+ "factory/digital-printer.webp": {
+  "source": "assets/pdf_images/p06_1.jpeg",
+  "note": "PDF p6: digital printing plant \u2014 CHECK: may be a manufacturer/press photo, not Nitara's own floor",
+  "size": [
+   493,
+   332
+  ]
+ },
+ "factory/laser-lace.webp": {
+  "source": "assets/pdf_images/p06_1.jpeg",
+  "note": "PDF p6: laser-cut lace",
+  "size": [
+   493,
+   311
+  ]
+ },
+ "factory/hotfix.webp": {
+  "source": "assets/pdf_images/p06_1.jpeg",
+  "note": "PDF p6: hot-fix machine",
+  "size": [
+   703,
+   311
+  ]
+ },
+ "factory/cutting-floor.webp": {
+  "source": "assets/factory/factory-floor-cutting.jpg",
+  "note": "old site: cutting floor",
+  "size": [
+   594,
+   384
+  ]
+ },
+ "factory/stitching-floor.webp": {
+  "source": "assets/factory/factory-floor-stitching.jpg",
+  "note": "old site: stitching floor",
+  "size": [
+   564,
+   282
+  ]
+ },
+ "factory/fabric-inspection.webp": {
+  "source": "assets/factory/digital-printing-machine.jpg",
+  "note": "old site: fabric inspection",
+  "size": [
+   640,
+   360
+  ]
+ },
+ "studio/pattern-sketch.webp": {
+  "source": "assets/section-backgrounds/pattern-sketch.jpg",
+  "note": "old site: pattern drafting sketch",
+  "size": [
+   815,
+   560
+  ]
+ },
+ "logos/better-cotton.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "logo cropped from company profile p3, re-inked single colour",
+  "size": [
+   614,
+   276
+  ]
+ },
+ "logos/sedex.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "logo cropped from company profile p3, re-inked single colour",
+  "size": [
+   393,
+   394
+  ]
+ },
+ "clients/versace.webp": {
+  "source": "assets/clients/versace.png",
+  "note": "client logo from old site (2022)",
+  "size": [
+   459,
+   300
+  ]
+ },
+ "clients/moschino.webp": {
+  "source": "assets/clients/moschino.png",
+  "note": "client logo from old site (2022)",
+  "size": [
+   600,
+   227
+  ]
+ },
+ "clients/gas.webp": {
+  "source": "assets/clients/gas.gif",
+  "note": "client logo from old site (2022)",
+  "size": [
+   500,
+   190
+  ]
+ },
+ "clients/didi.webp": {
+  "source": "assets/clients/didi.jpg",
+  "note": "client logo from old site (2022)",
+  "size": [
+   600,
+   227
+  ]
+ },
+ "clients/dk-company.webp": {
+  "source": "assets/clients/dk-company.png",
+  "note": "client logo from old site (2022)",
+  "size": [
+   269,
+   300
+  ]
+ },
+ "clients/roman-originals.webp": {
+  "source": "assets/clients/roman-originals.jpg",
+  "note": "client logo from old site (2022)",
+  "size": [
+   172,
+   87
+  ]
+ },
+ "clients/fng-group.webp": {
+  "source": "assets/clients/fng-group.jpg",
+  "note": "client logo from old site (2022)",
+  "size": [
+   480,
+   300
+  ]
+ },
+ "clients/brands4kids.webp": {
+  "source": "assets/clients/brands4kids.png",
+  "note": "client logo from old site (2022)",
+  "size": [
+   224,
+   224
+  ]
+ },
+ "texture/manila-paper.webp": {
+  "source": "assets/generated/Blank Kraft Paper Hang Tag with Twisted String.png",
+  "note": "AI-generated material texture supplied by the client; crop of tag body as paper texture",
+  "prompt": "Overhead macro photograph of a blank manila card garment hang tag with a brass-ringed eyelet hole and a loop of natural unbleached cotton string, lying flat, soft raking daylight from the left showing paper fibre texture, no text, no logo, isolated on pure flat #00FF00 green background, photorealistic, sharp focus."
+ },
+ "texture/indigo-linen.webp": {
+  "source": "assets/generated/Golden Stitches on Indigo Linen.png",
+  "note": "AI-generated material texture supplied by the client; top strip without stitch, mirror-tiled",
+  "prompt": "Extreme macro photograph of a single line of hand running stitch in turmeric-yellow cotton embroidery thread across deep indigo handloom cotton, thread twist visible, shallow depth of field, soft daylight, no hands, no text, photorealistic."
+ },
+ "texture/gold-running-stitch.webp": {
+  "source": "assets/generated/Golden Stitches on Indigo Linen.png",
+  "note": "AI-generated material texture supplied by the client; stitch strip",
+  "prompt": "same as indigo-linen"
+ },
+ "texture/indigo-chalk-cloth.webp": {
+  "source": "assets/generated/Indigo Fabric with Chalk Pattern Marks.png",
+  "note": "AI-generated material texture supplied by the client; full frame",
+  "prompt": "Seamless top-down macro photograph of hand-dyed indigo cotton cloth on a tailor's cutting table, visible plain weave and uneven dye variation, a few faint white tailor's chalk lines, soft even daylight, no objects, no text, photorealistic texture."
+ },
+ "logos/ecovero.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "logo cropped from company profile p3, re-inked single colour",
+  "size": [
+   740,
+   170
+  ]
+ },
+ "logos/livaeco.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "logo cropped from company profile p3, re-inked single colour",
+  "size": [
+   429,
+   255
+  ]
+ },
+ "logos/modal.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "logo cropped from company profile p3, re-inked single colour",
+  "size": [
+   258,
+   237
+  ]
+ },
+ "texture/care-label.webp": {
+  "source": "assets/generated/chatgpt/care-label.png",
+  "note": "AI blank woven care label, chroma-keyed",
+  "prompt": "A blank cream woven satin garment care label, long and narrow, with a folded and stitched top edge and fine selvedge on both sides, lying flat and straight, visible woven texture, no text or symbols on it, isolated on a pure flat #00FF00 chroma green background, soft even light, photorealistic, portrait.",
+  "reference": null,
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72118.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72118.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (sage cotton maxi dress with hand-embroidered pink, coral and blue florals across the bodice and tassel ties), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72118.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72120.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72120.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (printed two-piece, puff-sleeve tie-front crop top with a long side-slit skirt in a bold pink, yellow and teal floral print), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72120.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72121.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72121.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (white off-shoulder embroidered top with a long tiered skirt in a teal, cream and orange border print), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72121.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72159.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72159.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (sleeveless slip maxi dyed in an ombr\u00c3\u00a9 from deep indigo to sea-blue, white foam-like band and a sand-orange hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72159.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72183.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72183.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (navy slip dress covered in a bright botanical print of pink flowers, leaves and birds), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72183.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72184.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72184.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (blush pink floral chiffon maxi with cold-shoulder flutter sleeves and a blouson waist), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72184.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72187-b.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72187-b.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (white schiffli eyelet tiered maxi dress with thin straps and pale blue embroidery), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72187-b.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72228.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72228.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (long open kimono in a turquoise and multicolour paisley print with tassel trims, over a short black slip dress), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72228.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/peg.webp": {
+  "source": "assets/generated/chatgpt/peg.png",
+  "note": "AI wooden peg, chroma-keyed",
+  "prompt": "A single traditional wooden spring clothes peg (clothespin) with a small steel spring, photographed from the side and slightly above, natural pale birch wood grain, soft studio daylight, isolated on a pure flat #00FF00 chroma green background, no shadow on the background, sharp focus, photorealistic, square.",
+  "reference": null,
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/stamp-checked.webp": {
+  "source": "assets/generated/chatgpt/stamp-checked.png",
+  "note": "AI rubber-stamp impression, keyed to madder ink",
+  "prompt": "A single real rubber-stamp impression in deep madder-red ink on plain pure white paper, scanned flat: a rectangular stamp with a double border reading CHECKED in bold condensed capitals. Authentic ink texture: uneven pressure, speckled gaps, slightly fuzzy edges and one heavier corner, stamped at a small angle. Nothing else on the page, pure white background, high resolution.",
+  "reference": null,
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/stamp-workwithus.webp": {
+  "source": "assets/generated/chatgpt/stamp-workwithus.png",
+  "note": "AI rubber-stamp impression, keyed to madder ink",
+  "prompt": "A single real circular rubber-stamp impression in deep madder-red ink on plain pure white paper, scanned flat: an outer ring of text reading WORK WITH US \u00e2\u20ac\u00a2 NITARA INDIA \u00e2\u20ac\u00a2 around a small centre star, double ring border. Authentic ink texture with uneven pressure, speckled gaps, fuzzy edges, slightly rotated. Nothing else, pure white background, high resolution, square.",
+  "reference": null,
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/adda-hands.webp": {
+  "source": "assets/generated/chatgpt/story-adda-hands.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Ink and watercolour illustration of an artisan's hands doing hand embroidery on cotton cloth stretched across a traditional wooden adda frame, needle pulling coloured thread through a half-finished floral motif in pink, coral, saffron and leaf green; a few skeins of thread beside the frame. Loose expressive black ink line, transparent watercolour washes, lots of white paper showing, sketchbook feel, viewed from slightly above, hands and frame only, no faces. No text. Landscape 3:2.",
+  "reference": null,
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/studio-sketchbook.webp": {
+  "source": "assets/generated/chatgpt/studio-sketchbook.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "A fashion designer's open sketchbook page, flat lay from directly above: on the left, a front and back technical flat drawing of the attached sage maxi dress (smocked neckline, tassel ties, gathered tiered skirt) in fine black ink with dotted stitch lines; on the right, a loose watercolour colour study of its floral embroidery, a small pinned fabric swatch of sage cotton with a brass pin, and a few pencil measurement arrows. Annotations are only illegible pencil scribbles, no readable words or numbers. Warm off-white paper, soft daylight, photorealistic flat lay, landscape 3:2.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72118.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "texture/charcoal-floral.webp": {
+  "source": "Charcoal antique floral remnant print copy.jpg",
+  "note": "client-supplied print; field of the client charcoal antique floral remnant print"
+ },
+ "texture/charcoal-border.webp": {
+  "source": "Charcoal antique floral remnant print copy.jpg",
+  "note": "client-supplied print; border band of the same print"
+ },
+ "hero/poster-bench.webp": {
+  "source": "Nitara_Poster_60cm_300dpi_Enlarged.png",
+  "note": "client poster, right side cropped clear of its text"
+ },
+ "art/hex-bci-process.webp": {
+  "source": "wetransfer_bci-new-pdf_2026-11-13_0902/BCI PROCESS New.pdf",
+  "note": "client collateral"
+ },
+ "art/hex-smeta.webp": {
+  "source": "wetransfer_bci-new-pdf_2026-11-13_0902/Sedex 2 New.pdf",
+  "note": "client collateral"
+ },
+ "video/onset-eyelet.mp4": {
+  "source": "nitara India.mp4",
+  "note": "client video, right panel cropped clear of burned-in text, muted"
+ }
+}
