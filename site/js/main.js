@@ -1,370 +1,778 @@
-// nitara: page behaviour. Everything here enhances a page that already works without it.
+/**
+ * nitara — site behaviour (all pages)
+ * ---------------------------------------------------------------------------
+ * The HTML is complete and readable without this file. Everything here is an
+ * enhancement, and every feature checks that its elements exist first, so the
+ * same module runs on the home page and on /capabilities.
+ *
+ * Motion policy
+ *   - Visitors who prefer reduced motion, or who press "Pause motion", get a
+ *     still page: no smooth scrolling, no pinned reels, no ambient animation.
+ *   - Scroll-linked effects are scrubbed (they follow the scrollbar); nothing
+ *     autoplays except the one-time hero entrance.
+ *
+ * Libraries (loaded as classic scripts before this module):
+ *   window.gsap, window.ScrollTrigger (GSAP 3.12), window.Lenis (1.1)
+ */
+
+/* =========================================================================
+   0. Utilities and shared state
+   ========================================================================= */
+
 const root = document.documentElement;
-const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-let still = reduce.matches || root.classList.contains('still');
-const desktop = () => window.innerWidth > 820;
-const $ = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const $ = (selector, scope = document) => scope.querySelector(selector);
+const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const isDesktop = () => window.innerWidth > 820;
+const isHomePage = () => /^\/(index(\.html)?)?$/.test(location.pathname);
 
 const { gsap, ScrollTrigger } = window;
-const hasGsap = !!(gsap && ScrollTrigger);
+const hasGsap = Boolean(gsap && ScrollTrigger);
 if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-/* ---------------- smooth scroll ---------------- */
+/** Single source of truth for the motion preference. */
+const motion = {
+  still: reducedMotion.matches || root.classList.contains('still'),
+  listeners: new Set(),
+  set(value) {
+    this.still = value;
+    root.classList.toggle('still', value);
+    try { localStorage.setItem('nitara-motion', value ? 'off' : 'on'); } catch (e) { /* private mode */ }
+    this.listeners.forEach((fn) => fn(value));
+  },
+  onChange(fn) { this.listeners.add(fn); },
+};
+
+/** Run a feature in isolation: one broken feature must never stop the rest. */
+function feature(name, init) {
+  try { init(); } catch (error) { console.error(`[nitara] ${name} failed`, error); }
+}
+
+/* =========================================================================
+   1. Smooth scrolling (Lenis), synced with ScrollTrigger
+   ========================================================================= */
+
 let lenis = null;
-function startLenis() {
-  if (lenis || still || !window.Lenis) return;
-  lenis = new window.Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true });
+
+function startSmoothScroll() {
+  if (lenis || motion.still || !window.Lenis) return;
+  lenis = new window.Lenis({ lerp: 0.11, smoothWheel: true, wheelMultiplier: 1 });
   if (hasGsap) {
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis && lenis.raf(t * 1000));
+    gsap.ticker.add(lenisTick);
     gsap.ticker.lagSmoothing(0);
   } else {
-    const loop = (t) => { if (lenis) { lenis.raf(t); requestAnimationFrame(loop); } };
+    const loop = (time) => { if (lenis) { lenis.raf(time); requestAnimationFrame(loop); } };
     requestAnimationFrame(loop);
   }
 }
-function stopLenis() { if (lenis) { lenis.destroy(); lenis = null; } }
-function scrollToEl(el) {
-  if (!el) return;
-  if (lenis) lenis.scrollTo(el, { offset: 0, duration: 1.4 });
-  else el.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+function lenisTick(time) { if (lenis) lenis.raf(time * 1000); }
+function stopSmoothScroll() {
+  if (!lenis) return;
+  if (hasGsap) gsap.ticker.remove(lenisTick);
+  lenis.destroy();
+  lenis = null;
 }
-startLenis();
 
-document.addEventListener('click', (e) => {
-  const a = e.target.closest('a[href^="#"]');
-  if (!a) return;
-  const id = a.getAttribute('href');
-  const target = id === '#top' ? document.body : $(id);
+/** Scroll to an element (or the top) the same way everywhere. */
+function scrollToTarget(target) {
   if (!target) return;
-  e.preventDefault();
-  closeMenu();
-  scrollToEl(target);
-  history.replaceState(null, '', id);
-  if (id !== '#top') setTimeout(() => { target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); }, still ? 0 : 900);
-});
-
-/* ---------------- the stitched logo ---------------- */
-function stitchLogo() {
-  const svg = $('[data-stitch-logo]');
-  if (!svg) return;
-  const clip = $('[data-stitch-clip]', svg), needle = $('[data-stitch-needle]', svg), satin = $('.s-satin', svg);
-  if (still || !hasGsap) {
-    clip.setAttribute('width', 1600); satin.style.opacity = 1; svg.classList.add('is-sewn'); return;
-  }
-  clip.setAttribute('width', 0);
-  const p = { x: 0 };
-  const tl = gsap.timeline({ delay: 0.35 });
-  tl.set(needle, { opacity: 1 })
-    .to(p, {
-      x: 1600, duration: 2.8, ease: 'power1.inOut',
-      onUpdate() {
-        clip.setAttribute('width', p.x);
-        needle.setAttribute('cx', p.x);
-        needle.setAttribute('cy', 190 + Math.sin(p.x / 34) * 70);
-      },
-    })
-    .to(needle, { opacity: 0, duration: 0.3 }, '-=0.2')
-    .to(satin, { opacity: 1, duration: 1.2, ease: 'power2.out' }, '-=0.6')
-    .add(() => svg.classList.add('is-sewn'), '-=0.3')
-    .from('.hero__tagline, .hero__lede, .hero__actions', { y: 24, opacity: 0, duration: 1, stagger: 0.12, ease: 'expo.out' }, 0.9);
-  // the thread keeps running slowly, like it's still being pulled through
-
-}
-stitchLogo();
-
-/* ---------------- hero tag (WebGL) ---------------- */
-let heroTag = null;
-function webglOK() {
-  try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
-}
-const tagHost = $('[data-hero-tag]');
-if (tagHost && webglOK()) {
-  import('./tag3d.js').then(({ mountHeroTag }) => mountHeroTag(tagHost, { still })).then((t) => { heroTag = t; })
-    .catch(() => root.classList.add('no-webgl'));
-} else {
-  root.classList.add('no-webgl');
-}
-$('[data-tag-flip]')?.addEventListener('click', () => heroTag && heroTag.flip());
-
-/* ---------------- fabric swatches (WebGL) ---------------- */
-let fabric = null;
-const glCanvas = $('[data-fabric-gl]');
-const swatchFigs = $$('[data-swatches] figure');
-if (glCanvas && swatchFigs.length && webglOK() && window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 821px)').matches) {
-  import('./fabric.js').then(({ mountFabric }) => { fabric = mountFabric(glCanvas, swatchFigs, { still }); }).catch(() => {});
-} else if (glCanvas) {
-  glCanvas.remove();
+  const toTop = target === document.body || target.id === 'top';
+  if (lenis) lenis.scrollTo(toTop ? 0 : target, { duration: 1.3 });
+  else if (toTop) window.scrollTo({ top: 0, behavior: motion.still ? 'auto' : 'smooth' });
+  else target.scrollIntoView({ behavior: motion.still ? 'auto' : 'smooth', block: 'start' });
 }
 
-/* ---------------- arrivals: stitched headings, chapter tags ---------------- */
-const arrive = new IntersectionObserver((entries) => {
-  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); arrive.unobserve(e.target); }
-}, { threshold: 0.35 });
-$$('.reveal-stitch, .chapter__tag').forEach((el) => arrive.observe(el));
+/* =========================================================================
+   2. In-page links: "#id" everywhere, and "/#id" when we are on the home page
+   ========================================================================= */
 
-/* Chapter tags turn on their string: lift, swing through edge-on, settle on the other face. */
-$$('[data-flip]').forEach((wrap) => {
-  const tag = $('.tag', wrap);
-  const btn = $('.tag__turn', wrap);
-  if (!tag) return;
-  let anim = null;
-  // once the arrival swing has played, release the element so the turn can own its transform
-  tag.addEventListener('animationend', () => wrap.classList.add('is-settled'));
-  const faceDeg = () => (wrap.classList.contains('is-flipped') ? 180 : 0);
-  const rot = (y, z, t) => 'rotateY(' + y + 'deg) rotateZ(' + z + 'deg) translateY(' + t + 'px)';
-  function turn() {
-    wrap.classList.add('is-settled');
-    const from = faceDeg();
-    const to = from === 0 ? 180 : 0;
-    const dir = to > from ? 1 : -1;
-    wrap.classList.toggle('is-flipped', to === 180);
-    if (btn) btn.setAttribute('aria-pressed', String(to === 180));
-    if (anim) anim.cancel();
-    if (still || reduce.matches) {
-      anim = tag.animate([{ transform: rot(from, 0, 0) }, { transform: rot(to, 0, 0) }], { duration: 260, easing: 'ease-out', fill: 'forwards' });
-      return;
+function initAnchors() {
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    const href = link.getAttribute('href');
+    let hash = null;
+    if (href.startsWith('#')) hash = href;
+    else if (href.startsWith('/#') && isHomePage()) hash = href.slice(1);
+    if (!hash || hash === '#') return;
+
+    const target = hash === '#top' ? document.body : document.getElementById(hash.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    scrollToTarget(target);
+    history.replaceState(null, '', hash === '#top' ? location.pathname : hash);
+    if (hash !== '#top') {
+      // move keyboard focus with the view, without a second jump
+      window.setTimeout(() => {
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }, motion.still ? 0 : 900);
     }
-    anim = tag.animate([
-      { transform: rot(from, 0, 0), offset: 0 },
-      { transform: rot(from + dir * 40, -3 * dir, -12), offset: 0.22, easing: 'ease-in' },
-      { transform: rot(from + dir * 90, -5 * dir, -16), offset: 0.45 },
-      { transform: rot(to + dir * 14, 2.5 * dir, -4), offset: 0.72 },
-      { transform: rot(to - dir * 5, -1 * dir, 0), offset: 0.88 },
-      { transform: rot(to, 0, 0), offset: 1 },
-    ], { duration: 1150, easing: 'cubic-bezier(.33,0,.2,1)', fill: 'forwards' });
-  }
-  if (btn) {
-    btn.setAttribute('aria-pressed', 'false');
-    btn.addEventListener('click', (e) => { e.stopPropagation(); turn(); });
-  }
-  tag.addEventListener('click', turn);
-});
-
-/* ---------------- counter + nav ink ---------------- */
-const counter = $('[data-counter]'), cNo = $('[data-counter-no]'), cName = $('[data-counter-name]');
-const chapters = $$('[data-chapter]');
-const navLinks = $$('.nav__links a');
-let currentIdx = -1;
-function setChapter(i) {
-  if (i === currentIdx || i < 0) return;
-  currentIdx = i;
-  const el = chapters[i];
-  cNo.textContent = String(i).padStart(2, '0') + ' / ' + String(chapters.length - 1).padStart(2, '0');
-  cName.textContent = el.dataset.chapter;
-  counter.classList.add('is-ticking');
-  setTimeout(() => counter.classList.remove('is-ticking'), 380);
-  navLinks.forEach((a) => a.setAttribute('aria-current', a.getAttribute('href') === '#' + el.id ? 'true' : 'false'));
-}
-function inkFor(el) { return el.classList.contains('ground-manila') || el.classList.contains('ground-turmeric') ? 'dark' : 'light'; }
-function onScrollState() {
-  const mid = window.innerHeight * 0.45;
-  let idx = 0, ink = 'light';
-  chapters.forEach((el, i) => {
-    const r = el.getBoundingClientRect();
-    if (r.top <= mid) idx = i;
-    if (r.top <= 36 && r.bottom > 36) ink = inkFor(el);
   });
-  // over the hero photo the nav stays light
-  setChapter(idx);
-  document.body.dataset.ink = ink;
-}
-let lastY = window.scrollY;
-const nav = $('[data-nav]');
-function onScroll() {
-  onScrollState();
-  const y = window.scrollY;
-  nav.classList.toggle('is-hidden', y > lastY && y > window.innerHeight * 0.9);
-  lastY = y;
-}
-window.addEventListener('scroll', onScroll, { passive: true });
-onScrollState();
 
-/* ---------------- horizontal reels (factory, rail) ---------------- */
-const pins = [];
-function setupPins() {
-  pins.forEach((t) => t.kill()); pins.length = 0;
-  if (!hasGsap || still || !desktop()) return;
-  for (const [wrapSel, trackSel] of [['[data-reel]', '.reel__track'], ['[data-rack]', '[data-rack-list]']]) {
-    const wrap = $(wrapSel), track = $(trackSel);
-    if (!wrap || !track) continue;
-    const dist = () => Math.max(0, track.scrollWidth - wrap.clientWidth);
-    const tween = gsap.to(track, {
-      x: () => -dist(), ease: 'none',
-      scrollTrigger: { trigger: wrap, start: 'center center', end: () => '+=' + dist(), pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1 },
+  // arriving from another page with a hash (e.g. /capabilities -> /#contact)
+  if (location.hash && location.hash.length > 1) {
+    const target = document.getElementById(location.hash.slice(1));
+    if (target) window.addEventListener('load', () => window.setTimeout(() => scrollToTarget(target), 120), { once: true });
+  }
+}
+
+/* =========================================================================
+   3. Header: hides on the way down, returns on the way up; its ink follows
+      the ground under it; the current chapter's link is marked
+   ========================================================================= */
+
+function initHeader() {
+  const nav = $('[data-nav]');
+  if (!nav) return;
+  const chapters = $$('[data-chapter], main > section');
+  const links = $$('.nav__links a[href*="#"]');
+  const lightGrounds = ['ground-manila', 'ground-turmeric'];
+  let lastY = window.scrollY;
+  let ticking = false;
+
+  function update() {
+    ticking = false;
+    const y = window.scrollY;
+    nav.classList.toggle('is-hidden', y > lastY && y > window.innerHeight * 0.9 && !root.classList.contains('menu-open'));
+    lastY = y;
+
+    // ink: what ground sits under the header line?
+    const probe = 36;
+    const under = chapters.find((el) => { const r = el.getBoundingClientRect(); return r.top <= probe && r.bottom > probe; });
+    document.body.dataset.ink = under && lightGrounds.some((c) => under.classList.contains(c)) ? 'dark' : 'light';
+
+    // current link: the chapter crossing the middle of the viewport
+    const middle = window.innerHeight * 0.45;
+    const current = chapters.filter((el) => el.getBoundingClientRect().top <= middle).pop();
+    links.forEach((a) => {
+      const id = a.getAttribute('href').split('#')[1];
+      a.setAttribute('aria-current', current && current.id === id ? 'true' : 'false');
     });
-    pins.push(tween.scrollTrigger, tween);
   }
-  ScrollTrigger.refresh();
-}
-/* ---------------- the pegged line ---------------- */
-const rackList = $('[data-rack-list]'), rackLine = $('[data-rack-line]');
-function drawLine() {
-  if (!rackList || !rackLine) return;
-  if (rackLine.parentElement !== rackList) { rackList.style.position = 'relative'; rackList.prepend(rackLine); }
-  const prints = $$('.print', rackList);
-  const W = rackList.scrollWidth;
-  rackLine.setAttribute('width', W);
-  rackLine.setAttribute('viewBox', `0 0 ${W} 120`);
-  const y0 = 18;
-  let d = `M 0 ${y0 - 6}`;
-  let px = 0, py = y0 - 6;
-  prints.forEach((li) => {
-    const x = li.offsetLeft + li.offsetWidth / 2, y = y0;
-    const sag = Math.min(46, Math.max(14, (x - px) * 0.07));
-    d += ` Q ${(px + x) / 2} ${Math.max(py, y) + sag} ${x} ${y}`;
-    px = x; py = y;
-  });
-  d += ` Q ${(px + W) / 2} ${y0 + 30} ${W} ${y0 - 6}`;
-  $('path', rackLine).setAttribute('d', d);
-}
-window.addEventListener('load', drawLine);
-window.addEventListener('resize', () => requestAnimationFrame(drawLine));
-if (hasGsap && !still) {
-  const btns = $$('.print__btn');
-  const tilts = btns.map((b) => parseFloat(getComputedStyle(b.closest('li')).getPropertyValue('--tilt')) || 0);
-  let swing = 0, swingV = 0, lastSY = window.scrollY;
-  gsap.ticker.add(() => {
-    if (still) return;
-    const y = window.scrollY, v = y - lastSY; lastSY = y;
-    swingV += (-v * 0.05 - swing * 0.08) ; swingV *= 0.86; swing += swingV;
-    swing = Math.max(-7, Math.min(7, swing));
-    if (Math.abs(swing) < 0.01 && Math.abs(swingV) < 0.01) return;
-    btns.forEach((b, i) => { b.style.transform = `rotate(${tilts[i] + swing * (0.7 + (i % 3) * 0.2)}deg)`; });
-  });
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
 }
 
-/* ---------------- sketch to sample ---------------- */
-const morph = $('[data-morph]');
-if (morph) {
-  const set = (p) => { morph.style.setProperty('--wipe', (p * 100).toFixed(2) + '%'); morph.style.setProperty('--wipe-n', p.toFixed(4)); };
-  if (hasGsap && !still) {
-    ScrollTrigger.create({ trigger: morph, start: 'top 75%', end: 'bottom 35%', scrub: 0.6, onUpdate: (st) => set(st.progress) });
-  } else { set(0.5); }
-}
+/* =========================================================================
+   4. Mobile menu: modal, focus-trapped, closes on Escape or link
+   ========================================================================= */
 
-window.addEventListener('load', setupPins);
-let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(setupPins, 250); });
+const menu = $('[data-menu]');
+const menuOpenButton = $('[data-menu-open]');
 
-/* ---------------- figures that count ---------------- */
-if (hasGsap && !still) {
-  $$('[data-count]').forEach((el) => {
-    const end = parseFloat(el.dataset.count);
-    if (end < 5) return;
-    const o = { v: 0 };
-    ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => gsap.to(o, { v: end, duration: 1.6, ease: 'power2.out', onUpdate: () => (el.textContent = Math.round(o.v)) }) });
-    el.textContent = '0';
-  });
-  // the machine sheet is stamped once it settles
-  const stampEl = $('.sheet__stamp');
-  if (stampEl) {
-    gsap.set(stampEl, { scale: 2.2, opacity: 0 });
-    ScrollTrigger.create({ trigger: '.sheet', start: 'top 55%', once: true, onEnter: () => gsap.to(stampEl, { scale: 1, opacity: 0.78, duration: 0.45, ease: 'back.out(2.2)', delay: 0.4 }) });
-  }
-  // swatches arrive as if being pinned to the board
-  $$('.swatch').forEach((li, i) => {
-    gsap.from(li, { y: 60, rotate: (i % 2 ? 6 : -6), opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: li, start: 'top 92%', once: true } });
-  });
-  // the hero photo drifts slower than the page
-  gsap.to('.hero__photo img', { yPercent: 12, scale: 1.06, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-}
-
-/* ---------------- menu ---------------- */
-const menu = $('[data-menu]'), menuBtn = $('[data-menu-open]');
-function openMenu() { menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true'); $('a', menu)?.focus(); lenis?.stop(); }
-function closeMenu() { if (!menu || menu.hidden) return; menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); lenis?.start(); }
-menuBtn?.addEventListener('click', openMenu);
-$('[data-menu-close]')?.addEventListener('click', () => { closeMenu(); menuBtn.focus(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
-
-/* ---------------- lookbox ---------------- */
-const box = $('[data-lookbox]');
-const codesInput = $('[data-codes]');
-let lastLook = null;
-$$('[data-look]').forEach((btn) => btn.addEventListener('click', () => {
-  lastLook = btn;
-  const fig = $('[data-lookbox-fig]', box);
-  fig.replaceChildren();
-  const img = new Image();
-  img.src = btn.dataset.src; img.width = btn.dataset.w; img.height = btn.dataset.h;
-  fig.append(img);
-  img.alt = btn.dataset.desc + ', style ' + btn.dataset.code;
-  $('[data-lookbox-code]', box).textContent = btn.dataset.code;
-  $('[data-lookbox-title]', box).textContent = btn.dataset.desc;
-  box.dataset.code = btn.dataset.code;
+function openMenu() {
+  if (!menu) return;
+  menu.hidden = false;
+  root.classList.add('menu-open');
+  menuOpenButton?.setAttribute('aria-expanded', 'true');
   lenis?.stop();
-  const wa = $('[data-lookbox-wa]', box);
-  if (wa) wa.href = 'https://wa.me/918860606081?text=' + encodeURIComponent(`Hello Nitara, I'd like to know more about style ${btn.dataset.code} (${btn.dataset.desc}).`);
-  box.showModal();
-}));
-box?.addEventListener('close', () => { lenis?.start(); lastLook?.focus(); });
-box?.addEventListener('click', (e) => { if (e.target === box) box.close(); });
-$('[data-lookbox-close]')?.addEventListener('click', () => box.close());
-$('[data-lookbox-ask]')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  const code = box.dataset.code;
-  const list = codesInput.value.split(',').map((s) => s.trim()).filter(Boolean);
-  if (!list.includes(code)) list.push(code);
-  codesInput.value = list.join(', ');
-  lastLook = null;
-  box.close();
-  scrollToEl($('#contact'));
-  setTimeout(() => $('#f-name').focus({ preventScroll: true }), still ? 0 : 1300);
-});
+  ($('a', menu) || $('[data-menu-close]', menu))?.focus();
+}
+function closeMenu() {
+  if (!menu || menu.hidden) return;
+  menu.hidden = true;
+  root.classList.remove('menu-open');
+  menuOpenButton?.setAttribute('aria-expanded', 'false');
+  lenis?.start();
+}
+function initMenu() {
+  if (!menu) return;
+  menuOpenButton?.addEventListener('click', openMenu);
+  $('[data-menu-close]', menu)?.addEventListener('click', () => { closeMenu(); menuOpenButton?.focus(); });
+  document.addEventListener('keydown', (event) => {
+    if (menu.hidden) return;
+    if (event.key === 'Escape') { closeMenu(); menuOpenButton?.focus(); return; }
+    if (event.key !== 'Tab') return;
+    const focusable = $$('a, button', menu);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
+}
 
-/* ---------------- enquiry form → email ---------------- */
-const form = $('[data-enquiry]');
-form?.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const err = $('[data-error]', form);
-  const f = form.elements;
-  const bad = [];
-  if (!f.name.value.trim()) bad.push(f.name);
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) bad.push(f.email);
-  if (!f.message.value.trim()) bad.push(f.message);
-  [f.name, f.email, f.message].forEach((el) => el.setAttribute('aria-invalid', bad.includes(el) ? 'true' : 'false'));
-  if (bad.length) {
-    err.hidden = false;
-    err.textContent = 'Please add your name, a working email and a line about what you’re making, so the team can reply.';
-    bad[0].focus();
+/* =========================================================================
+   5. Hero entrance: the wordmark is sewn in, then the headline lines rise,
+      the three promises arrive one by one, joined by a drawn stitch
+   ========================================================================= */
+
+function initHero() {
+  const hero = $('.hero');
+  if (!hero) return;
+  const logo = $('[data-stitch-logo]', hero);
+  const ready = () => hero.classList.add('is-ready');
+
+  if (!logo) { requestAnimationFrame(ready); return; }
+  const clip = $('[data-stitch-clip]', logo);
+  const needle = $('[data-stitch-needle]', logo);
+  const satin = $('.s-satin', logo);
+
+  if (motion.still || !hasGsap) {
+    clip.setAttribute('width', 1600);
+    satin.style.opacity = 1;
+    logo.classList.add('is-sewn');
+    ready();
     return;
   }
-  err.hidden = true;
-  const interests = $$('input[name="interest"]:checked', form).map((i) => i.value).join(', ');
-  const head = [
-    `Name: ${f.name.value.trim()}`,
-    f.company.value.trim() && `Brand / company: ${f.company.value.trim()}`,
-    `Email: ${f.email.value.trim()}`,
-    f.phone.value.trim() && `Phone / WhatsApp: ${f.phone.value.trim()}`,
-    interests && `Interested in: ${interests}`,
-    f.codes.value.trim() && `Style codes: ${f.codes.value.trim()}`,
-  ].filter(Boolean);
-  const lines = [...head, '', f.message.value.trim()];
-  const subject = `Sample request from ${f.company.value.trim() || f.name.value.trim()}`;
-  window.location.href = `mailto:tarun@nitaraindia.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-  const btn = $('button[type="submit"]', form);
-  btn.textContent = 'Tag sent to your email app';
-  setTimeout(() => (btn.textContent = 'Send the tag'), 4000);
-});
 
-/* ---------------- pause motion ---------------- */
-const motionBtn = $('[data-motion-toggle]');
-function applyMotionUI() {
-  motionBtn.setAttribute('aria-pressed', String(still));
-  $('span', motionBtn).textContent = still ? 'Play motion' : 'Pause motion';
-  $('use', motionBtn).setAttribute('href', still ? '#i-play' : '#i-pause');
+  clip.setAttribute('width', 0);
+  const progress = { x: 0 };
+  gsap.timeline({ delay: 0.15 })
+    .add(ready, 0.1)
+    .set(needle, { opacity: 1 }, 0)
+    .to(progress, {
+      x: 1600, duration: 1.9, ease: 'power1.inOut',
+      onUpdate() {
+        clip.setAttribute('width', progress.x);
+        needle.setAttribute('cx', progress.x);
+        needle.setAttribute('cy', 190 + Math.sin(progress.x / 34) * 70);
+      },
+    }, 0)
+    .to(needle, { opacity: 0, duration: 0.25 }, '-=0.2')
+    .to(satin, { opacity: 1, duration: 0.9, ease: 'power2.out' }, '-=0.5')
+    .add(() => logo.classList.add('is-sewn'), '-=0.2');
+
+  // the photograph drifts a little slower than the page
+  gsap.to('.hero__photo img', {
+    yPercent: 10, scale: 1.05, ease: 'none',
+    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+  });
 }
-applyMotionUI();
-motionBtn?.addEventListener('click', () => {
-  still = !still;
-  root.classList.toggle('still', still);
-  try { localStorage.setItem('nitara-motion', still ? 'off' : 'on'); } catch (e) {}
-  heroTag?.setStill(still);
-  fabric?.setStill(still);
-  if (still) stopLenis(); else startLenis();
-  if (hasGsap) still ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
-  setupPins();
-  applyMotionUI();
-});
-reduce.addEventListener?.('change', (e) => { if (e.matches && !still) motionBtn.click(); });
+
+/* =========================================================================
+   6. Arrivals: stitched headings, chapter tags, [data-reveal] and
+      [data-reveal-stagger] blocks — each animates once, when it enters
+   ========================================================================= */
+
+function initReveals() {
+  $$('[data-reveal-stagger]').forEach((list) => {
+    [...list.children].forEach((child, index) => child.style.setProperty('--i', index));
+  });
+  const blocks = $$('.reveal-stitch, .chapter__tag, [data-reveal]');
+  const lists = $$('[data-reveal-stagger]');
+  if (!('IntersectionObserver' in window)) { [...blocks, ...lists].forEach((el) => el.classList.add('is-in')); return; }
+  const revealOnce = (observer) => (entries) => entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('is-in');
+    observer.unobserve(entry.target);
+  });
+  // single blocks reveal once a quarter of them is visible
+  const blockObserver = new IntersectionObserver((e) => revealOnce(blockObserver)(e), { threshold: 0.25, rootMargin: '0px 0px -6% 0px' });
+  // lists can be taller than the viewport, so they start as soon as their top edge is well inside it
+  const listObserver = new IntersectionObserver((e) => revealOnce(listObserver)(e), { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+  blocks.forEach((el) => blockObserver.observe(el));
+  lists.forEach((el) => listObserver.observe(el));
+
+  // Safety net: a fast jump (anchor link, smooth-scroll fling, End key) can carry an element
+  // past the viewport without it ever intersecting. Anything whose top is already in or above
+  // the view is revealed, so nothing can stay hidden behind the reader.
+  const pending = new Set([...blocks, ...lists]);
+  const sweep = () => {
+    const limit = window.innerHeight * 0.92;
+    pending.forEach((el) => {
+      if (el.getBoundingClientRect().top < limit) {
+        el.classList.add('is-in');
+        pending.delete(el);
+      }
+    });
+  };
+  let sweepQueued = false;
+  window.addEventListener('scroll', () => {
+    if (sweepQueued || !pending.size) return;
+    sweepQueued = true;
+    requestAnimationFrame(() => { sweepQueued = false; sweep(); });
+  }, { passive: true });
+  sweep();
+}
+
+/* =========================================================================
+   7. Figures that count up once: <span data-count="290">290</span>
+   ========================================================================= */
+
+function initCounters() {
+  const figures = $$('[data-count]');
+  if (!figures.length || motion.still || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const el = entry.target;
+      const end = parseFloat(el.dataset.count);
+      const decimals = (el.dataset.count.split('.')[1] || '').length;
+      const duration = clamp(600 + end * 4, 700, 1800);
+      const start = performance.now();
+      const step = (now) => {
+        const t = clamp((now - start) / duration, 0, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (end * eased).toFixed(decimals);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      el.textContent = (0).toFixed(decimals);
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.6 });
+  figures.forEach((el) => observer.observe(el));
+}
+
+/* =========================================================================
+   8. Chapter tags: turn on their string to show the facts on the back
+   ========================================================================= */
+
+function initChapterTags() {
+  $$('[data-flip]').forEach((wrap) => {
+    const tag = $('.tag', wrap);
+    const button = $('.tag__turn', wrap);
+    if (!tag) return;
+    let animation = null;
+    const rotate = (y, z, lift) => `rotateY(${y}deg) rotateZ(${z}deg) translateY(${lift}px)`;
+
+    // once the arrival swing has played, the turn owns the transform
+    tag.addEventListener('animationend', () => wrap.classList.add('is-settled'));
+
+    function turn() {
+      wrap.classList.add('is-settled');
+      const from = wrap.classList.contains('is-flipped') ? 180 : 0;
+      const to = from === 0 ? 180 : 0;
+      const dir = to > from ? 1 : -1;
+      wrap.classList.toggle('is-flipped', to === 180);
+      button?.setAttribute('aria-pressed', String(to === 180));
+      animation?.cancel();
+
+      if (motion.still) {
+        animation = tag.animate([{ transform: rotate(from, 0, 0) }, { transform: rotate(to, 0, 0) }],
+          { duration: 240, easing: 'ease-out', fill: 'forwards' });
+        return;
+      }
+      animation = tag.animate([
+        { transform: rotate(from, 0, 0), offset: 0 },
+        { transform: rotate(from + dir * 40, -3 * dir, -12), offset: 0.22, easing: 'ease-in' },
+        { transform: rotate(from + dir * 90, -5 * dir, -16), offset: 0.45 },
+        { transform: rotate(to + dir * 14, 2.5 * dir, -4), offset: 0.72 },
+        { transform: rotate(to - dir * 5, -1 * dir, 0), offset: 0.88 },
+        { transform: rotate(to, 0, 0), offset: 1 },
+      ], { duration: 1150, easing: 'cubic-bezier(.33,0,.2,1)', fill: 'forwards' });
+    }
+
+    if (button) {
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', (event) => { event.stopPropagation(); turn(); });
+    }
+    tag.addEventListener('click', turn);
+  });
+}
+
+/* =========================================================================
+   9. Chapter counter (home): the small tag bottom-right names where you are
+   ========================================================================= */
+
+function initChapterCounter() {
+  const counter = $('[data-counter]');
+  const chapters = $$('[data-chapter]');
+  if (!counter || !chapters.length) return;
+  const number = $('[data-counter-no]', counter);
+  const name = $('[data-counter-name]', counter);
+  const total = String(chapters.length - 1).padStart(2, '0');
+  let current = -1;
+
+  function update() {
+    const middle = window.innerHeight * 0.45;
+    let index = 0;
+    chapters.forEach((el, i) => { if (el.getBoundingClientRect().top <= middle) index = i; });
+    if (index === current) return;
+    current = index;
+    number.textContent = `${String(index).padStart(2, '0')} / ${total}`;
+    name.textContent = chapters[index].dataset.chapter;
+    counter.classList.add('is-ticking');
+    window.setTimeout(() => counter.classList.remove('is-ticking'), 380);
+  }
+  window.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+  update();
+}
+
+/* =========================================================================
+   10. Horizontal reels (factory photos, collection line): pinned and
+       scrubbed sideways on desktop, native swipe on touch and when still
+   ========================================================================= */
+
+const pinnedReels = [];
+function setupReels() {
+  pinnedReels.splice(0).forEach((tween) => { tween.scrollTrigger?.kill(); tween.kill(); });
+  if (!hasGsap || motion.still || !isDesktop()) {
+    $$('.reel__track, [data-rack-list]').forEach((track) => { track.style.transform = ''; });
+    return;
+  }
+  [['[data-reel]', '.reel__track'], ['[data-rack]', '[data-rack-list]']].forEach(([wrapSelector, trackSelector]) => {
+    const wrap = $(wrapSelector);
+    const track = wrap && $(trackSelector, wrap);
+    if (!track) return;
+    const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth);
+    pinnedReels.push(gsap.to(track, {
+      x: () => -distance(), ease: 'none',
+      scrollTrigger: {
+        trigger: wrap, start: 'center center', end: () => `+=${distance()}`,
+        pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1,
+      },
+    }));
+  });
+  ScrollTrigger.refresh();
+}
+
+/* =========================================================================
+   11. Collection line: a cotton line sagging between pegs; prints sway
+       with scroll speed like paper on a draught
+   ========================================================================= */
+
+function initCollectionLine() {
+  const list = $('[data-rack-list]');
+  const line = $('[data-rack-line]');
+  if (!list || !line) return;
+
+  function drawLine() {
+    if (line.parentElement !== list) { list.style.position = 'relative'; list.prepend(line); }
+    const prints = $$('.print', list);
+    const width = list.scrollWidth;
+    line.setAttribute('width', width);
+    line.setAttribute('viewBox', `0 0 ${width} 120`);
+    const pegY = 18;
+    let x0 = 0;
+    let d = `M 0 ${pegY - 6}`;
+    prints.forEach((print) => {
+      const x = print.offsetLeft + print.offsetWidth / 2;
+      const sag = clamp((x - x0) * 0.07, 14, 46);
+      d += ` Q ${(x0 + x) / 2} ${pegY + sag} ${x} ${pegY}`;
+      x0 = x;
+    });
+    d += ` Q ${(x0 + width) / 2} ${pegY + 30} ${width} ${pegY - 6}`;
+    $('path', line).setAttribute('d', d);
+  }
+  window.addEventListener('load', drawLine);
+  window.addEventListener('resize', () => requestAnimationFrame(drawLine));
+  drawLine();
+
+  if (!hasGsap) return;
+  const buttons = $$('.print__btn', list);
+  const tilts = buttons.map((b) => parseFloat(getComputedStyle(b.closest('li')).getPropertyValue('--tilt')) || 0);
+  let swing = 0;
+  let velocity = 0;
+  let lastY = window.scrollY;
+  gsap.ticker.add(() => {
+    if (motion.still) return;
+    const y = window.scrollY;
+    const speed = y - lastY;
+    lastY = y;
+    velocity = (velocity - speed * 0.05 - swing * 0.08) * 0.86;   // spring back to rest, damped
+    swing = clamp(swing + velocity, -7, 7);
+    if (Math.abs(swing) < 0.01 && Math.abs(velocity) < 0.01) return;
+    buttons.forEach((button, i) => { button.style.transform = `rotate(${tilts[i] + swing * (0.7 + (i % 3) * 0.2)}deg)`; });
+  });
+}
+
+/* =========================================================================
+   12. Studio: the sketch wipes away to reveal the sample, scrubbed by scroll
+   ========================================================================= */
+
+function initMorph() {
+  const morph = $('[data-morph]');
+  if (!morph) return;
+  const set = (p) => {
+    morph.style.setProperty('--wipe', `${(p * 100).toFixed(2)}%`);
+    morph.style.setProperty('--wipe-n', p.toFixed(4));
+  };
+  if (!hasGsap || motion.still) { set(0.5); return; }
+  ScrollTrigger.create({ trigger: morph, start: 'top 75%', end: 'bottom 35%', scrub: 0.6, onUpdate: (st) => set(st.progress) });
+}
+
+/* =========================================================================
+   13. Craft swatches as cloth (WebGL), desktop pointers only, loaded lazily
+   ========================================================================= */
+
+let fabric = null;
+function webglAvailable() {
+  try { const c = document.createElement('canvas'); return Boolean(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
+}
+function initFabric() {
+  const canvas = $('[data-fabric-gl]');
+  const figures = $$('[data-swatches] figure');
+  if (!canvas || !figures.length) return;
+  const capable = webglAvailable() && window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 821px)').matches;
+  if (!capable) { canvas.remove(); return; }
+  const section = figures[0].closest('section');
+  const load = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    load.disconnect();
+    import('./fabric.js')
+      .then(({ mountFabric }) => { fabric = mountFabric(canvas, figures, { still: motion.still }); })
+      .catch((error) => console.error('[nitara] fabric failed', error));
+  }, { rootMargin: '400px 0px' });
+  load.observe(section);
+}
+
+/* =========================================================================
+   14. Lookbox: open a print and ask about it
+   ========================================================================= */
+
+function initLookbox() {
+  const box = $('[data-lookbox]');
+  if (!box) return;
+  const figure = $('[data-lookbox-fig]', box);
+  const codesInput = $('[data-codes]');
+  let opener = null;
+
+  $$('[data-look]').forEach((button) => button.addEventListener('click', () => {
+    opener = button;
+    const { code, desc, src, w, h } = button.dataset;
+    const image = new Image();
+    image.src = src; image.width = w; image.height = h;
+    image.alt = `${desc}, style ${code}`;
+    figure.replaceChildren(image);
+    $('[data-lookbox-code]', box).textContent = code;
+    $('[data-lookbox-title]', box).textContent = desc;
+    box.dataset.code = code;
+    lenis?.stop();
+    box.showModal();
+  }));
+
+  box.addEventListener('close', () => { lenis?.start(); opener?.focus(); });
+  box.addEventListener('click', (event) => { if (event.target === box) box.close(); });
+  $('[data-lookbox-close]', box)?.addEventListener('click', () => box.close());
+  $('[data-lookbox-ask]', box)?.addEventListener('click', (event) => {
+    event.preventDefault();
+    // if a thank-you panel is showing from an earlier enquiry, reopen a fresh form first
+    const thanks = $('[data-thanks]');
+    if (thanks && !thanks.hidden) $('[data-thanks] button')?.click();
+    if (codesInput) {
+      const codes = codesInput.value.split(',').map((s) => s.trim()).filter(Boolean);
+      if (!codes.includes(box.dataset.code)) codes.push(box.dataset.code);
+      codesInput.value = codes.join(', ');
+    }
+    opener = null;
+    box.close();
+    scrollToTarget($('#contact'));
+    window.setTimeout(() => $('#f-name')?.focus({ preventScroll: true }), motion.still ? 0 : 1300);
+  });
+}
+
+/* =========================================================================
+   15. Enquiry form: validated in the page, delivered to our team by FormSubmit
+
+   The request goes to FormSubmit's AJAX endpoint as JSON (https://formsubmit.co/ajax-documentation)
+   and arrives in the inbox as a table. Anything that stops it (offline, an error status, a
+   {success: "false"} answer, or no reply inside 12 seconds) leaves the visitor's words in the form
+   and offers the same enquiry as a mailto: link, so an enquiry is never lost.
+   A hidden "_honey" field catches bots: if it has a value we pretend success and send nothing.
+   ========================================================================= */
+
+function initEnquiry() {
+  const form = $('[data-enquiry]');
+  if (!form) return;
+  const fields = $('[data-fields]', form);
+  const thanks = $('[data-thanks]', form);
+  const error = $('[data-error]', form);
+  const submit = $('button[type="submit"]', form);
+  if (!fields || !thanks || !error || !submit) return;
+
+  const RECIPIENT = 'tarun@nitaraindia.com';
+  const ENDPOINT = `https://formsubmit.co/ajax/${RECIPIENT}`;
+  const TIMEOUT = 12000;
+  const idleLabel = submit.textContent;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let sending = false;
+
+  /** The visitor's answers, trimmed. Optional fields come back as empty strings. */
+  const collect = () => {
+    const f = form.elements;
+    const value = (el) => el.value.trim();
+    return {
+      name: value(f.name),
+      company: value(f.company),
+      email: value(f.email),
+      phone: value(f.phone),
+      interests: $$('input[name="interest"]:checked', form).map((i) => i.value).join(', '),
+      codes: value(f.codes),
+      message: value(f.message),
+    };
+  };
+
+  /** The same enquiry as a mailto: link, used as the fallback when sending fails. */
+  const mailtoFor = (d) => {
+    const lines = [
+      `Name: ${d.name}`,
+      d.company && `Brand / company: ${d.company}`,
+      `Email: ${d.email}`,
+      d.phone && `Phone: ${d.phone}`,
+      d.interests && `Interested in: ${d.interests}`,
+      d.codes && `Style codes: ${d.codes}`,
+    ].filter(Boolean);
+    const subject = `Enquiry from ${d.company || d.name}`;
+    const body = [...lines, '', d.message].join('\n');
+    return `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  /** The JSON body FormSubmit expects: readable keys first (empty optional ones left out), then its _options. */
+  const payloadFor = (d) => ({
+    ...Object.fromEntries([
+      ['Name', d.name],
+      ['Brand / company', d.company],
+      ['email', d.email],   // lowercase: FormSubmit sets Reply-To from a field named "email"
+      ['Phone', d.phone],
+      ['Interested in', d.interests],
+      ['Style codes', d.codes],
+      ['Message', d.message],
+    ].filter(([, v]) => v)),
+    _subject: `Website enquiry from ${d.company || d.name}`,
+    _template: 'table',
+    _captcha: 'false',
+    _replyto: d.email,
+    _honey: '',
+  });
+
+  /** POST the enquiry. Resolves on success; throws on anything else so the caller can show the fallback. */
+  const send = async (d) => {
+    const controller = window.AbortController ? new AbortController() : null;
+    const timer = window.setTimeout(() => controller?.abort(), TIMEOUT);
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payloadFor(d)),
+        signal: controller?.signal,
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const result = await response.json();
+      // FormSubmit answers {success: "true" | "false", message}; accept a real boolean too.
+      if (!result || String(result.success) !== 'true') throw new Error(result?.message || 'Not accepted');
+    } finally {
+      window.clearTimeout(timer);
+    }
+  };
+
+  const setSending = (on) => {
+    sending = on;
+    submit.disabled = on;
+    submit.textContent = on ? 'Sending…' : idleLabel;
+    form.setAttribute('aria-busy', String(on));
+  };
+
+  /** Show a message in the alert line. Given the visitor's answers, it also offers the mailto: fallback. */
+  const showError = (message, d) => {
+    error.hidden = false;
+    error.textContent = message;
+    if (!d) return;
+    const link = document.createElement('a');
+    link.href = mailtoFor(d);
+    link.textContent = 'Send it from your email app instead';
+    error.append(' ', link);
+  };
+
+  /** Swap the fields for the thank-you panel. The form is cleared, so nothing the visitor typed stays on a shared screen. */
+  const showThanks = (d) => {
+    $('[data-thanks-title]', thanks).textContent = `Thank you, ${d.name.split(/\s+/)[0]}.`;
+    $('[data-thanks-email]', thanks).textContent = d.email;
+    form.reset();
+    $$('[aria-invalid]', form).forEach((el) => el.removeAttribute('aria-invalid'));
+    error.hidden = true;
+    error.textContent = '';
+    fields.hidden = true;
+    thanks.hidden = false;
+    thanks.focus();
+  };
+
+  $('[data-again]', thanks)?.addEventListener('click', () => {
+    thanks.hidden = true;
+    fields.hidden = false;
+    form.elements.name.focus();
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (sending) return;
+    const f = form.elements;
+    const emailValue = f.email.value.trim();
+    const invalid = [];
+    if (!f.name.value.trim()) invalid.push(f.name);
+    if (!emailPattern.test(emailValue)) invalid.push(f.email);
+    if (!f.message.value.trim()) invalid.push(f.message);
+    [f.name, f.email, f.message].forEach((el) => el.setAttribute('aria-invalid', String(invalid.includes(el))));
+
+    if (invalid.length) {
+      showError('Please add your name, a working email and a line about what you’re making, so we can reply.');
+      invalid[0].focus();
+      return;
+    }
+    error.hidden = true;
+
+    const data = collect();
+    // Honeypot: only a bot fills the hidden field. Look successful, send nothing.
+    if (f._honey?.value) { showThanks(data); return; }
+
+    setSending(true);
+    let sent = false;
+    try {
+      await send(data);
+      sent = true;
+    } catch (reason) {
+      console.warn('[nitara] enquiry not sent', reason);
+    }
+    setSending(false);
+
+    if (sent) {
+      showThanks(data);
+    } else {
+      showError('We couldn’t send your enquiry just now. Please try again.', data);
+      submit.focus();
+    }
+  });
+}
+
+/* =========================================================================
+   16. Pause motion: one switch in the footer, remembered on this device
+   ========================================================================= */
+
+function initMotionToggle() {
+  const button = $('[data-motion-toggle]');
+  const render = () => {
+    if (!button) return;
+    button.setAttribute('aria-pressed', String(motion.still));
+    $('span', button).textContent = motion.still ? 'Play motion' : 'Pause motion';
+    $('use', button).setAttribute('href', motion.still ? '#i-play' : '#i-pause');
+  };
+  render();
+  button?.addEventListener('click', () => motion.set(!motion.still));
+
+  motion.onChange((still) => {
+    fabric?.setStill(still);
+    if (still) stopSmoothScroll(); else startSmoothScroll();
+    if (hasGsap) (still ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume());
+    setupReels();
+    render();
+  });
+  reducedMotion.addEventListener?.('change', (event) => { if (event.matches && !motion.still) motion.set(true); });
+}
+
+/* =========================================================================
+   Boot
+   ========================================================================= */
+
+startSmoothScroll();
+feature('anchors', initAnchors);
+feature('header', initHeader);
+feature('menu', initMenu);
+feature('hero', initHero);
+feature('reveals', initReveals);
+feature('counters', initCounters);
+feature('chapter tags', initChapterTags);
+feature('chapter counter', initChapterCounter);
+feature('collection line', initCollectionLine);
+feature('morph', initMorph);
+feature('fabric', initFabric);
+feature('lookbox', initLookbox);
+feature('enquiry', initEnquiry);
+feature('motion toggle', initMotionToggle);
+window.addEventListener('load', () => feature('reels', setupReels));
+let resizeTimer = 0;
+window.addEventListener('resize', () => { window.clearTimeout(resizeTimer); resizeTimer = window.setTimeout(() => feature('reels', setupReels), 250); });

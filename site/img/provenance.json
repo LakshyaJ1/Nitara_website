@@ -588,5 +588,141 @@
  "video/onset-eyelet.mp4": {
   "source": "nitara India.mp4",
   "note": "client video, right panel cropped clear of burned-in text, muted"
+ },
+ "logos/color/better-cotton.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "full-colour logo as shown on company profile p3 (on its peach ground)"
+ },
+ "logos/color/ecovero.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "full-colour logo as shown on company profile p3 (on its peach ground)"
+ },
+ "logos/color/livaeco.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "full-colour logo as shown on company profile p3 (on its peach ground)"
+ },
+ "logos/color/modal.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "full-colour logo as shown on company profile p3 (on its peach ground)"
+ },
+ "logos/color/sedex.webp": {
+  "source": "assets/pdf_images/p03_1.jpeg",
+  "note": "full-colour logo as shown on company profile p3 (on its peach ground)"
+ },
+ "logos/color/smeta-4-pillars.webp": {
+  "source": "WhatsApp Image 2026-11-14 at 04.09.15.jpeg",
+  "note": "client-supplied Sedex SMETA 4 pillars graphic"
+ },
+ "art/illus-nit72148.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72148.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (knee-length button-through shirt-dress with a pointed collar, V-neck, three-quarter sleeves and a gently curved hem, in a coral, saffron and olive-green Kalamkari-style paisley and floral print with a green border at the hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72148.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72151.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72151.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (relaxed midi kaftan dress with a small V-neck, short folded dolman sleeves, side slits and a high-low hem, in a pink, teal and cream vertical-stripe print of small lantern-shaped motifs), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72151.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72155.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72155.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (long-sleeve midi dress with a V-neck, gathered cuffs, a tie waist and a flared skirt, in a beige and blush novelty print of small Arabian-style building facades and windows in brown, tan and green), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72155.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72156.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72156.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (block-print tiered maxi dress with a button-front yoke, tassel ties at the neck, three-quarter bishop sleeves, a gathered waist and a ruffled hem tier with striped borders, in a teal and navy ground covered in pink, orange and turquoise florals), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72156.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72159-b.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72159-b.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (sleeveless slip maxi dress with thin straps and a loose flowing A-line, dyed in an ombr\u00c3\u00a9 from deep indigo at the top to sea-blue, then a white foam-like band and a sand-orange hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72159-b.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72182.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72182.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (olive crinkle-cotton sleeveless maxi dress with a V-neck trimmed in a frayed edge, a loose draped front overlap with a high slit and a tulip-shaped hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72182.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72186-b.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72186-b.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (pink and white tie-dye tiered maxi dress with spaghetti straps, a hot pink bodice with white bandhani diamond dots, white lower tiers streaked with pink tie-dye and a hot pink hem band), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72186-b.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72186.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72186.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (pale sky-blue block-print mini dress with a tasselled tie neck, an indigo floral yoke panel, full balloon sleeves with cuffs and a gathered skirt finished with a white and indigo border band), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72186.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72187.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72187.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (short white crinkle-cotton shirt-dress with a collar, half button placket, dropped shoulders, rolled-up sleeves and a curved hem, with small orange and blue embroidered flowers scattered across the chest and shoulders), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72187.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72189-b.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72189-b.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (sheer white chikan-embroidered kaftan tunic with a V-neck, wide butterfly sleeves and small tassels at the side hem points, with white-on-white floral embroidery clustered at the neckline and trailing down the sleeves and sides), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72189-b.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72189.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72189.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (indigo and white shibori tie-dye midi shirt-dress with a ruffled stand collar, button placket, elbow-length flutter sleeves, a gathered waist and a tiered full skirt), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72189.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72198-b.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72198-b.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (white broderie-anglaise eyelet long-sleeve dress with a split notched collar, a yoke, a full tiered skirt and a scalloped hem, falling just above the knee), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72198-b.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72198.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72198.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (navy embroidered midi dress with a deep V-neck, pleated flutter cape sleeves, a fitted waist and a gathered skirt with a ruffled lower tier, with small cream star motifs scattered over it and a scalloped floral embroidery band at the hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72198.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72199.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72199.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (brick-red block-print tiered maxi dress with a scooped neck and printed yoke panel, bishop three-quarter sleeves, a tasselled waist tie and a wide hem tier of cream arched floral-pot panels trimmed in indigo), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72199.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit72226.webp": {
+  "source": "assets/generated/chatgpt/illus-nit72226.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (turquoise and navy tie-dye halter maxi dress with a deep V-neck, open back and a loose, flowing asymmetric high-low handkerchief hem), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit72226.jpg",
+  "generator": "ChatGPT image generation (client account)"
+ },
+ "art/illus-nit7224.webp": {
+  "source": "assets/generated/chatgpt/illus-nit7224.png",
+  "note": "AI illustration generated from the client's own garment photo",
+  "prompt": "Using the attached photo only as the garment reference, create a fashion designer's illustration of this exact garment (indigo-blue tiered midi dress with a V-neck, short puffed sleeves, gathered tiers and a high-low hem, covered in a small coral and white micro floral print), worn by an elongated, elegant fashion croquis figure in a relaxed runway pose. The face must stay blank or only a few loose strokes, never a portrait of the model. Render the garment faithfully: its silhouette, print or embroidery placement and colours. Style: confident loose black ink line with fine-liner detail, watercolour and gouache washes with soft blooms, a few graphite construction lines, on warm off-white cold-press paper with visible paper texture. Full figure, centred, generous white margin, portrait 2:3. No text, no lettering, no signature, no logos, no background scene.",
+  "reference": "D:/Projects/Nitara_website/.tmp/lookbook/nit7224.jpg",
+  "generator": "ChatGPT image generation (client account)"
  }
 }

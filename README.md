@@ -15,26 +15,28 @@ The Vercel project `coutureacraft` is connected to this repository, and its **Ro
 
 | What you want to change | Where |
 |---|---|
-| Text, sections, links | `site/src/index.template.html`, then rebuild (see below) |
+| Home page text and sections | `site/src/pages/index.main.html` |
+| Capabilities page | `site/src/pages/capabilities.main.html` + `site/css/capabilities.css` |
+| Header / menu, footer, `<head>` (titles, SEO) | `site/src/partials/` (`nav.html`, `footer.html`, `head.html`) and the page list at the top of `site/tools/build.py` |
 | Colours, fonts, spacing, layout | `site/css/site.css` (later blocks override earlier ones) |
-| Behaviour and animation | `site/js/main.js` (page), `site/js/tag3d.js` (3D hang tag), `site/js/fabric.js` (cloth swatches) |
-| Collection looks on the rail | images in `site/img/look/`, list in `site/img/looks.json`, order in `site/tools/build.py` |
-| Images | `site/img/…` (WebP, roughly 1000–2400 px wide) |
+| Behaviour and animation | `site/js/main.js` (one documented module, sections 0–16) and `site/js/fabric.js` (cloth swatches) |
+| Collection prints on the line | images in `site/img/look/`, sketches in `site/img/art/illus-<code>.webp`, list in `site/img/looks.json`, order in `site/tools/build.py` |
+| Enquiry form | markup in `index.main.html` (contact section), sending in `main.js` section 15. Enquiries are delivered to tarun@nitaraindia.com by FormSubmit. |
 
-`site/index.html` is **generated**. After editing the template or the looks, rebuild it:
+`site/index.html` and `site/capabilities.html` are **generated**. After editing anything in `site/src/` or the looks, rebuild:
 
 ```bash
 python site/tools/build.py
 ```
 
-The build inlines the stitched nitara logo and the pegged lookbook. Python 3 is the only requirement. Commit `site/index.html` together with your change.
+Python 3 is the only requirement. Commit the generated pages together with your change.
 
 To preview locally:
 
 ```bash
 cd site
 python -m http.server 8080
-# open http://localhost:8080
+# open http://localhost:8080 and http://localhost:8080/capabilities.html
 ```
 
 ## Design system

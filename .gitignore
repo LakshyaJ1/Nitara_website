@@ -23,3 +23,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .impeccable/questions/
+
+# client source images kept locally (web copies live in site/img)
+*.jpeg

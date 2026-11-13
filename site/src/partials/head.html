@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<link rel="canonical" href="https://nitaraindia.com{{PATH}}">
+<meta name="theme-color" content="#221F1D">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nitara India">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:url" content="https://nitaraindia.com{{PATH}}">
+<meta property="og:image" content="https://nitaraindia.com/img/hero/poster-bench.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Rozha+One&display=swap" rel="stylesheet">
+{{PRELOAD}}
+<link rel="stylesheet" href="css/site.css">
+{{EXTRA_CSS}}
+<script>
+  // Flag JS support and the visitor's saved motion preference before first paint, so nothing flashes.
+  document.documentElement.classList.add('js');
+  try { if (localStorage.getItem('nitara-motion') === 'off') document.documentElement.classList.add('still'); } catch (e) { /* storage unavailable */ }
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Nitara India Pvt Ltd","url":"https://nitaraindia.com","foundingDate":"2007","telephone":"+91-120-4267008","email":"tarun@nitaraindia.com","address":{"@type":"PostalAddress","streetAddress":"E-63, Sector 63","addressLocality":"Noida","postalCode":"201301","addressCountry":"IN"}}
+</script>
+</head>
