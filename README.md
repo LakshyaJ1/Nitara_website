@@ -21,7 +21,7 @@ The Vercel project `coutureacraft` is connected to this repository, and its **Ro
 | Colours, fonts, spacing, layout | `site/css/site.css` (later blocks override earlier ones) |
 | Behaviour and animation | `site/js/main.js` (one documented module, sections 0–16) and `site/js/fabric.js` (cloth swatches) |
 | Collection prints on the line | images in `site/img/look/`, sketches in `site/img/art/illus-<code>.webp`, list in `site/img/looks.json`, order in `site/tools/build.py` |
-| Enquiry form | markup in `index.main.html` (contact section), sending in `main.js` section 15. Enquiries are delivered to tarun@nitaraindia.com by FormSubmit. |
+| Enquiry form | markup in `index.main.html` (contact section), sending in `main.js` section 15. Enquiries are delivered by FormSubmit to sanyukta@nitaraindia.com, with tarun@nitaraindia.com copied (`RECIPIENT` and `COPY_TO`). |
 | Company profile download | `site/downloads/Nitara-India-Company-Profile-2026.pdf` (a web-compressed copy of the 2026 profile). Replace the file, keeping the name, to update it. |
 | WhatsApp number | `wa.me/918860615556` links in `index.main.html` (contact), `capabilities.main.html` (closing section) and `partials/footer.html` (footer link + floating button). |
 

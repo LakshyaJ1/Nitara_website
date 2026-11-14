@@ -576,7 +576,8 @@ function initEnquiry() {
   const submit = $('button[type="submit"]', form);
   if (!fields || !thanks || !error || !submit) return;
 
-  const RECIPIENT = 'tarun@nitaraindia.com';
+  const RECIPIENT = 'sanyukta@nitaraindia.com';
+  const COPY_TO = 'tarun@nitaraindia.com';   // copied on every enquiry
   const ENDPOINT = `https://formsubmit.co/ajax/${RECIPIENT}`;
   const TIMEOUT = 12000;
   const idleLabel = submit.textContent;
@@ -610,7 +611,7 @@ function initEnquiry() {
     ].filter(Boolean);
     const subject = `Enquiry from ${d.company || d.name}`;
     const body = [...lines, '', d.message].join('\n');
-    return `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    return `mailto:${RECIPIENT}?cc=${COPY_TO}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   /** The JSON body FormSubmit expects: readable keys first (empty optional ones left out), then its _options. */
@@ -625,6 +626,7 @@ function initEnquiry() {
       ['Message', d.message],
     ].filter(([, v]) => v)),
     _subject: `Website enquiry from ${d.company || d.name}`,
+    _cc: COPY_TO,
     _template: 'table',
     _captcha: 'false',
     _replyto: d.email,
