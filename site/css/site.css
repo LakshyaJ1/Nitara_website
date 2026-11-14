@@ -1061,3 +1061,20 @@ html.menu-open .wa-float, html:has(dialog[open]) .wa-float { opacity: 0; pointer
 .ground-madder .btn.btn--whatsapp:not(.btn--ghost):hover { background: #17603C; }
 .ground-madder .btn.btn--ghost { background: transparent; }
 .ground-madder .btn.btn--ghost:hover { background: rgba(243, 237, 227, .1); }
+
+/* v6c: QC flow in the studio, factory note, phone header */
+.qc-flow { margin: 34px 0 0; padding: 26px clamp(18px, 3vw, 34px) 24px; background: rgba(251, 248, 242, .55); border: 1.5px dashed rgba(26, 34, 56, .35); border-radius: 3px; }
+.qc-flow__h { margin: 0 0 16px; font-family: var(--display); font-weight: 400; font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.15; color: var(--indigo-ink); }
+.qc-flow__list { list-style: none; margin: 0 0 18px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; counter-reset: qc; }
+.qc-flow__list li { counter-increment: qc; display: flex; align-items: flex-start; gap: 10px; padding: 12px 12px 12px 10px; background: var(--chalk); border-radius: 3px 12px 12px 3px; box-shadow: 0 8px 16px -12px rgba(0, 0, 0, .45); font-size: .9rem; line-height: 1.3; color: var(--indigo-ink); }
+.qc-flow__list li::before { content: counter(qc); flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--madder); color: var(--chalk); font-family: var(--code); font-weight: 700; font-size: .75rem; }
+@media (max-width: 1000px) { .qc-flow__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .qc-flow__list { grid-template-columns: 1fr; } }
+
+.floor__note { grid-column: 1 / -1; margin-top: 30px; padding: 22px 0 0; border-top: 1px dashed rgba(223, 161, 44, .55); max-width: 46ch; }
+.floor__note-h { margin: 0 0 .4em; font-family: var(--display); font-weight: 400; font-size: clamp(1.3rem, 1.8vw, 1.6rem); line-height: 1.2; color: var(--turmeric); }
+.floor__note p { margin: 0; color: rgba(243, 237, 227, .78); }
+
+/* phones: the WhatsApp tag at bottom right replaces the header tag */
+@media (max-width: 760px) { .nav__buyers { display: none; } }
+@media (max-width: 760px) { [data-menu-open] { margin-left: auto; } }
