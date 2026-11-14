@@ -5490,7 +5490,7 @@ th {
       ${hs.map(e=>`--agentation-color-${e.id}: ${e.p3};`).join(`
 `)}
     }
-  }`].join("")});var xw=xo(()=>{var Ww=Ce(Ct()),jg=Ce(M0());Wg();var Hg=Ce(Pt()),of=document.createElement("div");of.id="agentation-root";document.body.appendChild(of);(0,jg.createRoot)(of).render((0,Hg.jsx)(Fg,{endpoint:"http://localhost:4747"}))});export default xw();
+  }`].join("")});var xw=xo(()=>{var Ww=Ce(Ct()),jg=Ce(M0());Wg();var Hg=Ce(Pt()),of=document.createElement("div");of.id="agentation-root";document.body.appendChild(of);(0,jg.createRoot)(of).render((0,Hg.jsx)(Fg,{endpoint:location.origin+"/__agentation"}))});export default xw();
 /*! Bundled license information:
 
 react/cjs/react.production.min.js:

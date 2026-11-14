@@ -774,11 +774,11 @@ feature('lookbox', initLookbox);
 feature('enquiry', initEnquiry);
 feature('motion toggle', initMotionToggle);
 
-/* Dev only: on a local preview, load the Agentation review toolbar so changes can be
-   pinned to elements and read by the agent (MCP server on localhost:4747).
-   Never runs on the live domains, and site/dev/ is not deployed. */
-if (['localhost', '127.0.0.1'].includes(location.hostname)) {
-  import('/dev/agentation.js').catch((error) => console.warn('[nitara] agentation toolbar not loaded', error));
+/* Review toolbar (Agentation): loads on local previews served by site/tools/serve.py,
+   including a forwarded preview port, so reviewers can pin change requests to elements.
+   Never on the live domains or Vercel previews; site/dev/ is not deployed anyway. */
+if (!/(^|\.)(nitaraindia\.com|coutureacraft\.com|vercel\.app)$/.test(location.hostname)) {
+  import('/dev/agentation.js').catch((error) => console.warn('[nitara] review toolbar not loaded', error));
 }
 window.addEventListener('load', () => feature('reels', setupReels));
 let resizeTimer = 0;

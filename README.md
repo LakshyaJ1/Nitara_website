@@ -34,10 +34,20 @@ Python 3 is the only requirement. Commit the generated pages together with your 
 To preview locally:
 
 ```bash
-cd site
-python -m http.server 8080
-# open http://localhost:8080 and http://localhost:8080/capabilities.html
+python site/tools/serve.py
+# open http://localhost:8080 and http://localhost:8080/capabilities
 ```
+
+`serve.py` behaves like Vercel (clean URLs such as `/capabilities`) and never caches, so a rebuild shows up on refresh.
+
+## Review comments (Agentation)
+
+On a local preview, a round toolbar button sits at the bottom right (desktop only). Click it, click any element and write what should change. Comments go to the Agentation server that Claude Code runs (MCP `agentation`, port 4747), and Claude can read, fix and resolve them.
+
+- To let someone else comment, forward port 8080 (VS Code "Ports" panel, ngrok, etc.) and send them that link. `serve.py` passes their comments through the same port, so nothing else needs to be opened.
+- Only share the link with people you trust: anyone who can open it can leave comments that will be acted on.
+- The toolbar never loads on nitaraindia.com, coutureacraft.com or Vercel previews, and `site/dev/` is not deployed.
+- The toolbar bundle is `site/dev/agentation.js`, built from `site/tools/agentation-entry.jsx` with esbuild (React 18 + `agentation`).
 
 ## Design system
 
