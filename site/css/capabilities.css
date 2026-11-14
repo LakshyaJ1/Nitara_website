@@ -327,3 +327,16 @@
   .cap-logos.stamps li { height: 76px; padding: 12px 16px; }
   .cap-logos.stamps img { max-height: 44px; max-width: 120px; }
 }
+
+/* v6: solar photo above the SMETA card; 8 quality checkpoints; certifications in progress */
+.cap-solar { max-width: 340px; margin: 0 0 26px auto; }
+.cap-solar img { display: block; width: 100%; height: auto; }
+.cap-comply__main .pending { margin-top: 30px; max-width: 640px; }
+.cap-cta__actions { flex-wrap: wrap; }
+@media (max-width: 900px) { .cap-solar { margin-left: 0; } }
+
+/* six compliance logos sit as a tidy 3 x 2 block */
+.cap-logos.stamps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 620px; }
+.cap-logos.stamps li { display: grid; place-items: center; }
+.cap.ground-madder .btn.btn--ghost { background: transparent; }
+.cap.ground-madder .btn.btn--ghost:hover { background: rgba(243, 237, 227, .1); }

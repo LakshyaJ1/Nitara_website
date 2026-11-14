@@ -26,3 +26,8 @@ Thumbs.db
 
 # client source images kept locally (web copies live in site/img)
 *.jpeg
+
+# client source posters and photos (web copies live in site/img)
+*.jpg
+# the downloadable company profile is a site asset
+!site/downloads/*.pdf

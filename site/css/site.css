@@ -932,3 +932,132 @@ body[data-ink="dark"] .nav { color: var(--indigo-ink); }
 /* ---------- buttons on a madder ground: switch to indigo so they stay visible ---------- */
 .ground-madder .btn:not(.btn--ghost) { background: var(--indigo-ink); }
 .ground-madder .btn:not(.btn--ghost):hover { background: var(--indigo-deep); }
+
+/* =====================================================================
+   v6 (14 Nov review): no Hindi on tags, four promises, profile download,
+   poster bands, quality notes, solar, pending certifications,
+   people with email, WhatsApp chat
+   ===================================================================== */
+
+/* chapter tags: title sits at the foot of the tag now that the Hindi line is gone */
+.tag__hindi { display: none; }
+.tag__front .tag__title { margin-top: auto; }
+
+/* hero: fourth promise joins the stitched list */
+.js .hero.is-ready .hero__promises li:nth-child(4)::before { transition-delay: 1.35s; }
+.js .hero.is-ready .hero__promises li:nth-child(4) > span { transition-delay: 1.5s; }
+.js .hero.is-ready .hero__actions { transition-delay: 1.65s; }
+.js .hero.is-ready .hero__meta { transition-delay: 1.9s; }
+
+/* hero actions: two primary routes, then the download and the collection link */
+.btn--icon svg { width: 1.25em; height: 1.25em; flex: none; margin-left: -.2em; }
+.btn__meta { font-family: var(--code); font-size: .72em; letter-spacing: .08em; opacity: .7; padding: .15em .45em; border: 1px solid currentColor; border-radius: 2px; }
+
+/* hero meta: "Est. 2007 · Noida, India" held together, services set apart */
+.hero__meta { gap: 8px clamp(28px, 4vw, 64px); align-items: baseline; }
+.hero__origin { display: inline-flex; gap: 0; }
+.hero__origin span + span::before { content: "·"; margin: 0 .55em; opacity: .7; }
+.hero__services { color: rgba(243, 237, 227, .8); }
+
+/* poster bands: the client's campaign posters, shown wide and quiet */
+.poster-band { margin: clamp(40px, 7vh, 80px) 0 0; position: relative; }
+.poster-band picture, .poster-band img { display: block; width: 100%; height: auto; }
+.poster-band img { aspect-ratio: 2200 / 1232; object-fit: cover; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .75), 0 2px 4px rgba(0, 0, 0, .2); }
+.poster-band--studio img { aspect-ratio: 2200 / 1253; }
+.poster-band figcaption { margin-top: 14px; font-size: .86rem; letter-spacing: .02em; opacity: .75; }
+.story__text p + p { margin-top: 1em; }
+
+/* studio: quality note under the process strip */
+.process__qc { margin: 22px 0 0; max-width: 62ch; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.process__qc strong { font-family: var(--display); font-weight: 400; font-size: 1.15rem; }
+
+/* responsibility: care label, solar photo under it, compliance aside on the right */
+.care { grid-template-areas: "label aside" "solar aside"; }
+.care__label { grid-area: label; }
+.care__aside { grid-area: aside; }
+.solar { grid-area: solar; margin: 0; background: #FBF8F2; padding: 10px 10px 12px; transform: rotate(1.2deg); box-shadow: 0 26px 40px -26px rgba(0, 0, 0, .5), 0 2px 3px rgba(0, 0, 0, .12); }
+.solar img { display: block; width: 100%; height: auto; aspect-ratio: 822 / 600; object-fit: cover; }
+.solar figcaption { margin-top: 10px; font-size: .85rem; color: var(--indigo-ink); }
+.solar strong { font-family: var(--display); font-weight: 400; font-size: 1.1rem; color: var(--madder-deep); }
+.care__rows strong { margin-bottom: .15em; }
+@media (max-width: 900px) { .care { grid-template-areas: "label" "solar" "aside"; } }
+
+/* certifications in progress: present, honest, visibly not yet earned */
+.pending { position: relative; margin: 26px 0 0; padding: 22px 20px 18px; border: 1.5px dashed rgba(26, 34, 56, .38); border-radius: 3px; background: rgba(251, 248, 242, .55); color: var(--indigo-ink); }
+.pending__flag { position: absolute; top: -.85em; left: 16px; margin: 0; padding: .3em .7em; background: var(--turmeric); color: var(--indigo-ink); font-family: var(--code); font-weight: 700; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; border-radius: 2px; }
+.pending__logos { display: flex; align-items: center; gap: 22px; margin: 4px 0 12px; }
+.pending__logos img { height: 58px; width: auto; filter: grayscale(.85) contrast(.9); opacity: .78; }
+.pending__h { margin: 0 0 .3em; font-family: var(--display); font-weight: 400; font-size: 1.2rem; line-height: 1.2; }
+.pending p { margin: 0; font-size: .9rem; line-height: 1.5; }
+
+/* contact: each person carries their own email, revealed on hover / focus */
+.contact__card .contact__people li.person { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding: .65em 0; }
+.person__name { color: inherit; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .45s var(--ease); }
+.person__name:hover, .person__name:focus-visible { background-size: 100% 1px; }
+.person__mail { display: inline-flex; align-items: center; gap: 10px; font-family: var(--text); font-size: .86rem; letter-spacing: .01em; }
+.person__mail a { color: var(--turmeric); text-decoration: none; }
+.person__mail a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.person__copy {
+  font: 600 .66rem/1 var(--text); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  color: var(--chalk); background: transparent; border: 1px solid rgba(243, 237, 227, .45); border-radius: 2px; padding: .55em .75em;
+  transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease);
+}
+.person__copy:hover, .person__copy:focus-visible { background: rgba(243, 237, 227, .1); border-color: var(--chalk); }
+.person__copy.is-copied { background: var(--turmeric); border-color: var(--turmeric); color: var(--indigo-ink); }
+@media (hover: hover) and (pointer: fine) {
+  .person__mail { opacity: 0; transform: translateX(-8px); transition: opacity .35s var(--ease), transform .45s var(--ease); }
+  .person:hover .person__mail, .person:focus-within .person__mail { opacity: 1; transform: none; }
+}
+@media (hover: none) { .person__mail { flex-basis: 100%; } }
+
+.contact__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 6px; }
+
+/* WhatsApp: the brand's own green, kept to the button so the page stays in its palette */
+.btn--whatsapp { background: #1F7A4D; }
+.btn--whatsapp:hover { background: #17603C; }
+.ground-madder .btn--whatsapp { background: #1F7A4D; }
+.btn--whatsapp svg { width: 1.35em; height: 1.35em; flex: none; margin-left: -.2em; }
+
+/* floating WhatsApp chat: round on desktop (above the chapter counter), a tag on phones */
+.wa-float {
+  position: fixed; z-index: 31; right: clamp(14px, 2vw, 28px); bottom: calc(clamp(14px, 3vh, 28px) + 64px);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #1F7A4D; color: #fff; text-decoration: none;
+  box-shadow: 0 14px 28px -12px rgba(0, 0, 0, .6), 0 0 0 3px rgba(243, 237, 227, .9);
+  transition: transform .45s var(--ease), opacity .35s, background-color .3s;
+}
+.wa-float:hover { transform: translateY(-3px); background: #17603C; }
+.wa-float svg { width: 28px; height: 28px; }
+.wa-float__text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html.menu-open .wa-float, html:has(dialog[open]) .wa-float { opacity: 0; pointer-events: none; }
+@media (max-width: 760px) {
+  .counter { display: none; }
+  .wa-float {
+    right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: auto; height: auto;
+    padding: 11px 16px 11px 13px; border-radius: 3px 22px 22px 3px;
+    font: 600 .72rem/1 var(--text); letter-spacing: .14em; text-transform: uppercase;
+  }
+  .wa-float svg { width: 22px; height: 22px; }
+  .wa-float__text { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+}
+@media print { .wa-float { display: none; } }
+
+/* v6 fixes after the screenshot pass */
+#story-title { font-size: clamp(2.5rem, 4.4vw, 4.6rem); max-width: 16ch; }
+.quality .display--s { font-size: clamp(1.6rem, 2.2vw, 2.15rem); }
+.care { row-gap: 34px; }
+.pending { padding-top: 30px; }
+
+/* people: name left, email + copy right, on one line where there is room */
+.contact__card .contact__people { max-width: 31rem; }
+@media (hover: hover) and (pointer: fine) {
+  .contact__card .contact__people li.person { flex-wrap: nowrap; align-items: center; }
+}
+@media (max-width: 520px) { .contact__card .contact__people li.person { flex-wrap: wrap; } }
+
+/* keep WhatsApp green and ghost buttons hollow on madder grounds */
+.ground-madder .btn.btn--whatsapp:not(.btn--ghost) { background: #1F7A4D; }
+.ground-madder .btn.btn--whatsapp:not(.btn--ghost):hover { background: #17603C; }
+.ground-madder .btn.btn--ghost { background: transparent; }
+.ground-madder .btn.btn--ghost:hover { background: rgba(243, 237, 227, .1); }

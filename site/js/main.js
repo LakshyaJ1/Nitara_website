@@ -754,6 +754,46 @@ function initMotionToggle() {
   reducedMotion.addEventListener?.('change', (event) => { if (event.matches && !motion.still) motion.set(true); });
 }
 
+/* ---------------------------------------------------------------------------
+   Copy email: each person in the contact card has a Copy button beside their
+   address. Uses the async clipboard API, with a textarea fallback for older
+   browsers and non-secure previews; the button confirms with "Copied".
+   --------------------------------------------------------------------------- */
+function initCopyEmail() {
+  const buttons = $$('[data-copy]');
+  if (!buttons.length) return;
+  const fallbackCopy = (text) => {
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    area.remove();
+    return ok;
+  };
+  buttons.forEach((button) => {
+    const label = button.textContent;
+    let timer = 0;
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const text = button.dataset.copy;
+      let ok = false;
+      try {
+        if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; }
+      } catch { ok = false; }
+      if (!ok) ok = fallbackCopy(text);
+      button.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+      button.classList.toggle('is-copied', ok);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => { button.textContent = label; button.classList.remove('is-copied'); }, 1800);
+    });
+  });
+}
+
+
 /* =========================================================================
    Boot
    ========================================================================= */
@@ -773,6 +813,7 @@ feature('fabric', initFabric);
 feature('lookbox', initLookbox);
 feature('enquiry', initEnquiry);
 feature('motion toggle', initMotionToggle);
+feature('copy email', initCopyEmail);
 
 /* Review toolbar (Agentation): loads on local previews served by site/tools/serve.py,
    including a forwarded preview port, so reviewers can pin change requests to elements.
