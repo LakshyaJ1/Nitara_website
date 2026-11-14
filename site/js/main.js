@@ -773,6 +773,13 @@ feature('fabric', initFabric);
 feature('lookbox', initLookbox);
 feature('enquiry', initEnquiry);
 feature('motion toggle', initMotionToggle);
+
+/* Dev only: on a local preview, load the Agentation review toolbar so changes can be
+   pinned to elements and read by the agent (MCP server on localhost:4747).
+   Never runs on the live domains, and site/dev/ is not deployed. */
+if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+  import('/dev/agentation.js').catch((error) => console.warn('[nitara] agentation toolbar not loaded', error));
+}
 window.addEventListener('load', () => feature('reels', setupReels));
 let resizeTimer = 0;
 window.addEventListener('resize', () => { window.clearTimeout(resizeTimer); resizeTimer = window.setTimeout(() => feature('reels', setupReels), 250); });
