@@ -3,7 +3,7 @@
  * ---------------------------------------------------------------------------
  * The HTML is complete and readable without this file. Everything here is an
  * enhancement, and every feature checks that its elements exist first, so the
- * same module runs on the home page and on /capabilities.
+ * same module runs on every page: home, /capabilities, /prints, /high-fashion and /kids.
  *
  * Motion policy
  *   - Visitors who prefer reduced motion, or who press "Pause motion", get a
@@ -116,9 +116,36 @@ function initAnchors() {
 
   // arriving from another page with a hash (e.g. /capabilities -> /#contact)
   if (location.hash && location.hash.length > 1) {
-    const target = document.getElementById(location.hash.slice(1));
-    if (target) window.addEventListener('load', () => window.setTimeout(() => scrollToTarget(target), 120), { once: true });
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) settleOn(target);
   }
+}
+
+/** Land exactly on a section after a cross-page link. Pinned reels add their scroll length and
+    lazy images grow only after load, so a single jump lands short (e.g. inside the rail).
+    Re-measure and correct until the section has stayed put, or until the visitor scrolls. */
+function settleOn(target) {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  let tries = 0;
+  let steady = 0;
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((type) => window.addEventListener(type, cancel, { once: true, passive: true }));
+  const tick = () => {
+    if (cancelled) return;
+    tries += 1;
+    const top = target.getBoundingClientRect().top;
+    if (Math.abs(top) <= 2) steady += 1;
+    else {
+      steady = 0;
+      const y = Math.max(0, window.scrollY + top);
+      if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+      else window.scrollTo(0, y);
+    }
+    if (steady < 3 && tries < 30) window.setTimeout(tick, 150);
+  };
+  if (document.readyState === 'complete') window.setTimeout(tick, 60);
+  else window.addEventListener('load', () => window.setTimeout(tick, 60), { once: true });
 }
 
 /* =========================================================================
@@ -131,7 +158,7 @@ function initHeader() {
   if (!nav) return;
   const chapters = $$('[data-chapter], main > section');
   const links = $$('.nav__links a[href*="#"]');
-  const lightGrounds = ['ground-manila', 'ground-turmeric'];
+  const lightGrounds = ['ground-manila', 'ground-turmeric', 'ground-ivory'];
   let lastY = window.scrollY;
   let ticking = false;
 
@@ -564,86 +591,167 @@ function initLookbox() {
    and arrives in the inbox as a table. Anything that stops it (offline, an error status, a
    {success: "false"} answer, or no reply inside 12 seconds) leaves the visitor's words in the form
    and offers the same enquiry as a mailto: link, so an enquiry is never lost.
+   Every page's form uses this code. With attachments (print briefs, tech packs) the same request
+   goes as multipart form data; large photos are resized in the browser first.
    A hidden "_honey" field catches bots: if it has a value we pretend success and send nothing.
    ========================================================================= */
 
-function initEnquiry() {
-  const form = $('[data-enquiry]');
-  if (!form) return;
+const ENQUIRY_TO = 'sanyukta@nitaraindia.com';
+const ENQUIRY_CC = 'tarun@nitaraindia.com';   // copied on every enquiry
+const ENQUIRY_ENDPOINT = `https://formsubmit.co/ajax/${ENQUIRY_TO}`;
+const MAX_FILES = 5;
+const MAX_BYTES = 5 * 1024 * 1024;            // all attachments together, after resizing
+
+/** Shrink a large photo to a sensible JPEG before upload; PDFs and small images pass through. */
+async function shrinkImage(file) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 900 * 1024 || !window.createImageBitmap) return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 2400 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close?.();
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.84));
+    if (!blob || blob.size >= file.size) return file;
+    return new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' });
+  } catch (e) {
+    return file;
+  }
+}
+
+const formatBytes = (n) => (n < 1024 * 1024 ? `${Math.max(1, Math.round(n / 1024))} KB` : `${(n / 1024 / 1024).toFixed(1)} MB`);
+
+/** A drop zone + file list for one form. Returns an object holding the chosen files. */
+function attachFiles(form) {
+  const input = $('[data-files]', form);
+  if (!input) return null;
+  const drop = input.closest('[data-drop]');
+  const list = $('[data-file-list]', drop);
+  const state = { files: [], error: '' };
+
+  const render = () => {
+    list.replaceChildren(...state.files.map((file, index) => {
+      const li = document.createElement('li');
+      const name = document.createElement('span');
+      name.className = 'drop__name';
+      name.textContent = file.name;
+      const size = document.createElement('span');
+      size.className = 'drop__size';
+      size.textContent = formatBytes(file.size);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'drop__remove';
+      remove.textContent = 'Remove';
+      remove.setAttribute('aria-label', `Remove ${file.name}`);
+      remove.addEventListener('click', () => { state.files.splice(index, 1); render(); });
+      li.append(name, size, remove);
+      return li;
+    }));
+    drop.classList.toggle('has-files', state.files.length > 0);
+  };
+
+  const add = async (incoming) => {
+    const accepted = [...incoming].filter((f) => /^image\//.test(f.type) || f.type === 'application/pdf' || /\.(pdf|jpe?g|png|webp|heic)$/i.test(f.name));
+    drop.classList.add('is-busy');
+    for (const file of accepted) {
+      if (state.files.length >= MAX_FILES) break;
+      state.files.push(await shrinkImage(file));
+    }
+    drop.classList.remove('is-busy');
+    input.value = '';
+    render();
+  };
+
+  input.addEventListener('change', () => add(input.files));
+  ['dragenter', 'dragover'].forEach((type) => drop.addEventListener(type, (event) => { event.preventDefault(); drop.classList.add('is-over'); }));
+  ['dragleave', 'drop'].forEach((type) => drop.addEventListener(type, (event) => { event.preventDefault(); drop.classList.remove('is-over'); }));
+  drop.addEventListener('drop', (event) => add(event.dataTransfer?.files || []));
+
+  state.total = () => state.files.reduce((sum, f) => sum + f.size, 0);
+  state.clear = () => { state.files = []; render(); };
+  return state;
+}
+
+/** One enquiry form. Every page's form uses the same markup contract:
+    [data-enquiry] with data-subject, fields carrying name + data-label, [data-fields], [data-thanks], [data-error]. */
+function initEnquiryForm(form) {
   const fields = $('[data-fields]', form);
   const thanks = $('[data-thanks]', form);
   const error = $('[data-error]', form);
   const submit = $('button[type="submit"]', form);
   if (!fields || !thanks || !error || !submit) return;
 
-  const RECIPIENT = 'sanyukta@nitaraindia.com';
-  const COPY_TO = 'tarun@nitaraindia.com';   // copied on every enquiry
-  const ENDPOINT = `https://formsubmit.co/ajax/${RECIPIENT}`;
   const TIMEOUT = 12000;
+  const UPLOAD_TIMEOUT = 45000;
   const idleLabel = submit.textContent;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const subjectBase = form.dataset.subject || 'Website enquiry';
+  const files = attachFiles(form);
   let sending = false;
 
-  /** The visitor's answers, trimmed. Optional fields come back as empty strings. */
+  /** [label, value] pairs in form order; checkbox groups are joined; empty optional answers left out. */
   const collect = () => {
-    const f = form.elements;
-    const value = (el) => el.value.trim();
-    return {
-      name: value(f.name),
-      company: value(f.company),
-      email: value(f.email),
-      phone: value(f.phone),
-      interests: $$('input[name="interest"]:checked', form).map((i) => i.value).join(', '),
-      codes: value(f.codes),
-      message: value(f.message),
-    };
+    const rows = [];
+    const seen = new Set();
+    [...form.elements].forEach((el) => {
+      if (!el.name || el.name.startsWith('_') || el.type === 'file' || el.type === 'submit' || seen.has(el.name)) return;
+      if (el.type === 'checkbox') {
+        seen.add(el.name);
+        const values = $$(`input[name="${el.name}"]:checked`, form).map((i) => i.value).join(', ');
+        const label = el.closest('fieldset')?.dataset.label || el.name;
+        if (values) rows.push([label, values]);
+        return;
+      }
+      const value = el.value.trim();
+      if (!value) return;
+      rows.push([el.name === 'email' ? 'email' : (el.dataset.label || el.name), value]);
+    });
+    const get = (name) => (form.elements[name]?.value || '').trim();
+    return { rows, name: get('name'), email: get('email'), company: get('company') };
   };
+
+  const subjectFor = (d) => `${subjectBase} from ${d.company || d.name}`;
 
   /** The same enquiry as a mailto: link, used as the fallback when sending fails. */
   const mailtoFor = (d) => {
-    const lines = [
-      `Name: ${d.name}`,
-      d.company && `Brand / company: ${d.company}`,
-      `Email: ${d.email}`,
-      d.phone && `Phone: ${d.phone}`,
-      d.interests && `Interested in: ${d.interests}`,
-      d.codes && `Style codes: ${d.codes}`,
-    ].filter(Boolean);
-    const subject = `Enquiry from ${d.company || d.name}`;
-    const body = [...lines, '', d.message].join('\n');
-    return `mailto:${RECIPIENT}?cc=${COPY_TO}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const body = d.rows.map(([k, v]) => `${k === 'email' ? 'Email' : k}: ${v}`).join('\n');
+    const note = files?.files.length ? '\n\n(Please attach your files to this email.)' : '';
+    return `mailto:${ENQUIRY_TO}?cc=${ENQUIRY_CC}&subject=${encodeURIComponent(subjectFor(d))}&body=${encodeURIComponent(body + note)}`;
   };
 
-  /** The JSON body FormSubmit expects: readable keys first (empty optional ones left out), then its _options. */
-  const payloadFor = (d) => ({
-    ...Object.fromEntries([
-      ['Name', d.name],
-      ['Brand / company', d.company],
-      ['email', d.email],   // lowercase: FormSubmit sets Reply-To from a field named "email"
-      ['Phone', d.phone],
-      ['Interested in', d.interests],
-      ['Style codes', d.codes],
-      ['Message', d.message],
-    ].filter(([, v]) => v)),
-    _subject: `Website enquiry from ${d.company || d.name}`,
-    _cc: COPY_TO,
+  const options = (d) => ({
+    _subject: subjectFor(d),
+    _cc: ENQUIRY_CC,
     _template: 'table',
     _captcha: 'false',
     _replyto: d.email,
     _honey: '',
+    _source: location.origin + location.pathname,
   });
 
-  /** POST the enquiry. Resolves on success; throws on anything else so the caller can show the fallback. */
+  /** POST the enquiry: JSON normally, multipart when files are attached. Throws on anything but success. */
   const send = async (d) => {
+    const withFiles = Boolean(files?.files.length);
     const controller = window.AbortController ? new AbortController() : null;
-    const timer = window.setTimeout(() => controller?.abort(), TIMEOUT);
+    const timer = window.setTimeout(() => controller?.abort(), withFiles ? UPLOAD_TIMEOUT : TIMEOUT);
+    let body;
+    const headers = { Accept: 'application/json' };
+    if (withFiles) {
+      body = new FormData();
+      d.rows.forEach(([k, v]) => body.append(k, v));
+      Object.entries(options(d)).forEach(([k, v]) => body.append(k, v));
+      files.files.forEach((file, i) => body.append(i === 0 ? 'attachment' : `attachment${i + 1}`, file, file.name));
+    } else {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify({ ...Object.fromEntries(d.rows), ...options(d) });
+    }
     try {
-      const response = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payloadFor(d)),
-        signal: controller?.signal,
-      });
+      const response = await fetch(ENQUIRY_ENDPOINT, { method: 'POST', headers, body, signal: controller?.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const result = await response.json();
       // FormSubmit answers {success: "true" | "false", message}; accept a real boolean too.
@@ -656,7 +764,7 @@ function initEnquiry() {
   const setSending = (on) => {
     sending = on;
     submit.disabled = on;
-    submit.textContent = on ? 'Sending…' : idleLabel;
+    submit.textContent = on ? (files?.files.length ? 'Uploading…' : 'Sending…') : idleLabel;
     form.setAttribute('aria-busy', String(on));
   };
 
@@ -671,11 +779,12 @@ function initEnquiry() {
     error.append(' ', link);
   };
 
-  /** Swap the fields for the thank-you panel. The form is cleared, so nothing the visitor typed stays on a shared screen. */
+  /** Swap the fields for the thank-you panel. The form is cleared, so nothing typed stays on a shared screen. */
   const showThanks = (d) => {
     $('[data-thanks-title]', thanks).textContent = `Thank you, ${d.name.split(/\s+/)[0]}.`;
     $('[data-thanks-email]', thanks).textContent = d.email;
     form.reset();
+    files?.clear();
     $$('[aria-invalid]', form).forEach((el) => el.removeAttribute('aria-invalid'));
     error.hidden = true;
     error.textContent = '';
@@ -694,16 +803,17 @@ function initEnquiry() {
     event.preventDefault();
     if (sending) return;
     const f = form.elements;
-    const emailValue = f.email.value.trim();
-    const invalid = [];
-    if (!f.name.value.trim()) invalid.push(f.name);
-    if (!emailPattern.test(emailValue)) invalid.push(f.email);
-    if (!f.message.value.trim()) invalid.push(f.message);
-    [f.name, f.email, f.message].forEach((el) => el.setAttribute('aria-invalid', String(invalid.includes(el))));
+    const required = $$('[required]', form);
+    const invalid = required.filter((el) => (el.type === 'email' ? !emailPattern.test(el.value.trim()) : !el.value.trim()));
+    required.forEach((el) => el.setAttribute('aria-invalid', String(invalid.includes(el))));
 
     if (invalid.length) {
-      showError('Please add your name, a working email and a line about what you’re making, so we can reply.');
+      showError('Please add your name, a working email and a few lines about what you need, so we can reply.');
       invalid[0].focus();
+      return;
+    }
+    if (files && files.total() > MAX_BYTES) {
+      showError(`Your attachments come to ${formatBytes(files.total())}. Please keep them under 5 MB in total, or send larger files to ${ENQUIRY_TO}.`);
       return;
     }
     error.hidden = true;
@@ -729,6 +839,37 @@ function initEnquiry() {
       submit.focus();
     }
   });
+}
+
+function initEnquiry() {
+  $$('[data-enquiry]').forEach((form) => initEnquiryForm(form));
+}
+
+/* ---------------------------------------------------------------------------
+   "Enquire about this" links: [data-pick="Golden Fringe"] ticks the matching
+   choice in the page's form (or writes it into its [data-pick-field]), then
+   brings the form into view with focus on the first field.
+   --------------------------------------------------------------------------- */
+function initPick() {
+  $$('[data-pick]').forEach((link) => link.addEventListener('click', (event) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    const form = target && $('[data-enquiry]', target);
+    if (!form) return;
+    event.preventDefault();
+    const value = link.dataset.pick;
+    // a thank-you panel from an earlier enquiry: reopen a fresh form first
+    const thanks = $('[data-thanks]', form);
+    if (thanks && !thanks.hidden) $('[data-again]', thanks)?.click();
+    const box = $$('input[type="checkbox"]', form).find((i) => i.value === value);
+    if (box) box.checked = true;
+    else {
+      const field = $('[data-pick-field]', form);
+      if (field) field.value = value;
+    }
+    scrollToTarget(target);
+    history.replaceState(null, '', `#${target.id}`);
+    window.setTimeout(() => form.elements.name?.focus({ preventScroll: true }), motion.still ? 0 : 1300);
+  }));
 }
 
 /* =========================================================================
@@ -814,6 +955,7 @@ feature('morph', initMorph);
 feature('fabric', initFabric);
 feature('lookbox', initLookbox);
 feature('enquiry', initEnquiry);
+feature('pick', initPick);
 feature('motion toggle', initMotionToggle);
 feature('copy email', initCopyEmail);
 

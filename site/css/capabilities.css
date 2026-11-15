@@ -340,3 +340,6 @@
 .cap-logos.stamps li { display: grid; place-items: center; }
 .cap.ground-madder .btn.btn--ghost { background: transparent; }
 .cap.ground-madder .btn.btn--ghost:hover { background: rgba(243, 237, 227, .1); }
+
+/* v7: words, not head counts, on the making floor */
+.cap-figures--words .cap-figures__n { font-size: clamp(2rem, 3.4vw, 3rem); }

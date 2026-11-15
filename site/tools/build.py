@@ -10,7 +10,7 @@ Inputs (site/src/):
     pages/<name>.main.html  the inside of <main> for each page
     pages/<name>.after.html optional markup placed after the footer (dialogs, overlays)
 
-Generated output (commit it): site/index.html, site/capabilities.html.
+Generated output (commit it): site/index.html, capabilities.html, prints.html, high-fashion.html, kids.html.
 The build also inlines the traced nitara logo, renders the pegged collection line from
 img/looks.json, and swaps in fallbacks for any art file that does not exist yet.
 """
@@ -41,10 +41,43 @@ PAGES = [
         "out": "capabilities.html",
         "path": "/capabilities",
         "title": "Capabilities · Nitara India",
-        "description": "Design studio, 16-head digital printing, hand and 24-head computerised embroidery, laser cutting, a 290-machine stitching floor, staged quality checks and SMETA-audited compliance, under one roof in Noida.",
+        "description": "Design studio, in-house digital printing, hand and computerised embroidery, laser cutting, stitching, washing and finishing, staged quality checks and SMETA-audited compliance, under one roof in Noida.",
         "preload": None,
         "css": ["css/capabilities.css"],
         "body_class": "page-capabilities",
+    },
+    {
+        "name": "prints",
+        "out": "prints.html",
+        "path": "/prints",
+        "title": "Print Studio · Nitara India",
+        "description": "Original print studies from the Nitara Print Studio in Noida, and custom prints designed for your brand from your mood board, sketch, photograph or colour story.",
+        "preload": "img/prints/madder-indigo-1400.webp",
+        "og": "img/prints/madder-indigo-1400.webp",
+        "css": ["css/studio.css"],
+        "body_class": "page-studio page-prints",
+    },
+    {
+        "name": "high-fashion",
+        "out": "high-fashion.html",
+        "path": "/high-fashion",
+        "title": "High Fashion · Sequin & Embellishment · Nitara India",
+        "description": "Sequinned and embellished evening wear developed and manufactured in our Noida atelier for international designer labels: hand sequin and bead work, fringe and feather trims.",
+        "preload": "img/high-fashion/golden-fringe-1000.webp",
+        "og": "img/high-fashion/golden-fringe-1000.webp",
+        "css": ["css/studio.css"],
+        "body_class": "page-studio page-couture",
+    },
+    {
+        "name": "kids",
+        "out": "kids.html",
+        "path": "/kids",
+        "title": "Kids’ Collection · Nitara India",
+        "description": "Occasion and everyday dresses for kids from Nitara India: printed florals, sequin and tulle, crochet and lace, designed and made in Noida.",
+        "preload": None,
+        "og": "img/kids/nit-kids-222-a-900.webp",
+        "css": ["css/studio.css"],
+        "body_class": "page-studio page-kids",
     },
 ]
 
@@ -132,10 +165,12 @@ def build_page(page: dict, fill: str, stitch: str, looks_html: str) -> str:
     head = (head.replace("{{TITLE}}", html.escape(page["title"]))
                 .replace("{{DESCRIPTION}}", html.escape(page["description"]))
                 .replace("{{PATH}}", page["path"])
+                .replace("{{OG_IMAGE}}", page.get("og", "img/hero/poster-bench.webp"))
                 .replace("{{PRELOAD}}", f'<link rel="preload" as="image" href="{page["preload"]}">' if page["preload"] else "")
                 .replace("{{EXTRA_CSS}}", "\n".join(f'<link rel="stylesheet" href="{c}">' for c in page["css"] if exists(c))))
-    nav = (read("partials/nav.html").replace("{{HOME}}", home)
-           .replace("{{CAP_CURRENT}}", ' aria-current="page"' if page["name"] == "capabilities" else ""))
+    nav = read("partials/nav.html").replace("{{HOME}}", home)
+    # mark this page's own link in the header and the menu
+    nav = nav.replace(f'href="{page["path"]}"', f'href="{page["path"]}" aria-current="page"') if page["path"] != "/" else nav
     footer = read("partials/footer.html").replace("{{HOME}}", home)
     after_rel = f"pages/{page['name']}.after.html"
     after = read(after_rel) if (SRC / after_rel).exists() else ""
