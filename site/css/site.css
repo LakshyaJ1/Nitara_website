@@ -1207,3 +1207,66 @@ html.menu-open .wa-float, html:has(dialog[open]) .wa-float { opacity: 0; pointer
   .minis { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px; padding-bottom: 10px; scrollbar-width: thin; }
   .minis__item { flex: 0 0 min(44vw, 220px); scroll-snap-align: start; }
 }
+
+/* v9: the timeline's third step glows and opens into our next chapter */
+.timeline--legacy { margin-bottom: clamp(30px, 5vh, 56px); }
+.timeline__next::before { background: var(--turmeric) !important; box-shadow: 0 0 0 6px rgba(223, 161, 44, .22), 0 0 22px rgba(223, 161, 44, .55); }
+.timeline__next h3 { color: #F6D58E; }
+.timeline__next p { color: var(--chalk); }
+
+/* v9: established and evolving, on the story's own dark ground */
+.evolve { --gold: #E7BE6A; position: relative; margin: 0 0 clamp(64px, 10vh, 120px); padding-top: clamp(34px, 5vh, 56px); border-top: 1px solid rgba(223, 161, 44, .3); }
+.evolve__head { max-width: 980px; }
+.evolve__kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; font-family: var(--code); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+.evolve__kicker::before { content: ""; width: 34px; height: 2px; background: var(--gold); }
+.evolve__title { margin: 0 0 .5em; font-family: var(--display); font-weight: 400; font-size: clamp(2.1rem, 4.2vw, 4rem); line-height: 1.02; color: var(--chalk); }
+.evolve__title em { display: block; font-style: normal; color: var(--gold); }
+.evolve__lead { margin: 0; max-width: 60ch; font-size: clamp(1.02rem, .5vw + .85rem, 1.18rem); line-height: 1.65; color: #D9D2C6; }
+.evolve__gold { color: #F6D58E; font-weight: 600; }
+
+/* the name lockup: Nitara India, a gold thread, Couture A Craft */
+.evolve__names { display: grid; grid-template-columns: auto minmax(90px, 1fr) auto; align-items: center; gap: clamp(16px, 2.4vw, 36px); margin: clamp(36px, 6vh, 64px) 0; padding: clamp(22px, 3vh, 32px) clamp(20px, 3vw, 40px); background: linear-gradient(90deg, rgba(243, 237, 227, .03), rgba(223, 161, 44, .12)); border: 1px solid rgba(223, 161, 44, .22); }
+.evolve__name { display: flex; flex-direction: column; margin: 0; }
+.evolve__name span { font-family: var(--code); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.evolve__name strong { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.8rem); line-height: 1.05; color: rgba(243, 237, 227, .78); white-space: nowrap; }
+.evolve__name small { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1rem; color: var(--muted); }
+.evolve__name--next { text-align: right; }
+.evolve__name--next span, .evolve__name--next small { color: var(--gold); }
+.evolve__name--next strong { color: #F6D58E; }
+.evolve__thread { position: relative; height: 2px; background: repeating-linear-gradient(90deg, var(--gold) 0 10px, transparent 10px 17px); background-size: 34px 2px; animation: evolve-thread 1.6s linear infinite; }
+.evolve__thread::after { content: ""; position: absolute; right: -2px; top: -5px; border: 6px solid transparent; border-right: 0; border-left: 9px solid var(--gold); }
+.evolve__thread span { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); white-space: nowrap; font-family: "Kalam", cursive; font-size: 1.1rem; color: var(--gold); }
+@keyframes evolve-thread { to { background-position: 34px 0; } }
+
+/* three pillars */
+.evolve__pillars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 24px); }
+.pillar { position: relative; display: flex; flex-direction: column; padding: clamp(22px, 2.4vw, 32px); background: rgba(243, 237, 227, .045); border: 1px solid rgba(243, 237, 227, .12); border-top: 3px solid var(--gold); transition: transform .5s var(--ease), background .5s var(--ease); }
+.pillar:hover { transform: translateY(-4px); background: rgba(243, 237, 227, .07); }
+.pillar--lit { background: linear-gradient(180deg, rgba(223, 161, 44, .2), rgba(223, 161, 44, .05)); border-color: rgba(223, 161, 44, .4); }
+.pillar--lit:hover { background: linear-gradient(180deg, rgba(223, 161, 44, .26), rgba(223, 161, 44, .07)); }
+.pillar__top { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.pillar__icon { width: 44px; height: 44px; padding: 9px; border-radius: 50%; border: 1.5px solid rgba(223, 161, 44, .55); fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pillar__no { font-family: var(--code); font-weight: 700; font-size: .78rem; letter-spacing: .16em; color: var(--muted); }
+.pillar__badge { margin-left: auto; font-family: var(--code); font-weight: 700; font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; background: var(--turmeric); color: #12100E; }
+.pillar h4 { margin: 0 0 12px; font-family: var(--display); font-weight: 400; font-size: clamp(1.35rem, 1.7vw, 1.65rem); line-height: 1.1; color: var(--chalk); }
+.pillar p { margin: 0 0 1em; font-size: .97rem; line-height: 1.6; color: #D9D2C6; }
+.pillar p:last-child { margin-bottom: 0; }
+.pillar__key { margin-top: auto !important; padding-left: 14px; border-left: 2px solid var(--gold); font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.18rem !important; line-height: 1.35 !important; color: #F6D58E !important; }
+.pillar__stat { display: flex; flex-direction: column; gap: 4px; }
+.pillar__stat strong { font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 3.8vw, 3.6rem); line-height: .95; color: #F6D58E; }
+.pillar__stat span { font-size: .95rem; color: var(--chalk); }
+.pillar__chips { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.pillar__chips li { font-size: .76rem; padding: 4px 9px; border-radius: 999px; border: 1px solid rgba(243, 237, 227, .3); color: var(--chalk); background: rgba(18, 16, 14, .25); }
+@media (max-width: 1000px) {
+  .evolve__pillars { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .evolve__names { grid-template-columns: 1fr; gap: 10px; }
+  .evolve__name--next { text-align: left; }
+  .evolve__name strong { white-space: normal; }
+  .evolve__thread { width: 2px; height: 46px; margin-left: 10px; background: repeating-linear-gradient(180deg, var(--gold) 0 8px, transparent 8px 14px); background-size: 2px 28px; animation-name: evolve-thread-v; }
+  .evolve__thread::after { right: auto; left: -5px; top: auto; bottom: -4px; border: 6px solid transparent; border-bottom: 0; border-top: 9px solid var(--gold); }
+  .evolve__thread span { left: 22px; bottom: 50%; transform: translateY(50%); }
+}
+@keyframes evolve-thread-v { to { background-position: 0 28px; } }
+@media (prefers-reduced-motion: reduce) { .evolve__thread { animation: none; } .pillar { transition: none; } }

@@ -158,7 +158,7 @@
       <figcaption>Hand embroidery from our ancestral village, Murad Nagar–Modi Nagar.</figcaption>
     </figure>
 
-    <ol class="timeline">
+    <ol class="timeline timeline--legacy">
       <li>
         <h3><span class="timeline__when hand">1970s</span> The factory</h3>
         <p>Our father’s garment manufacturing facility earns its name for quality production.</p>
@@ -167,28 +167,57 @@
         <h3><span class="timeline__when hand">2007</span> Nitara India</h3>
         <p>Nitara India brings manufacturing and village handwork together. A design studio, CAD and in-house print follow.</p>
       </li>
-      <li>
+      <li class="timeline__next">
         <h3><span class="timeline__when hand">Two decades on</span> Couture A Craft</h3>
-        <p>Couture A Craft Pvt. Ltd. brings fabric processing in house, alongside our garment production. Our design, printing, embroidery and manufacturing keep evolving as we serve fashion brands.</p>
+        <p>Our next chapter: a vertically integrated facility built around responsible production, quality and integrity.</p>
       </li>
     </ol>
 
-    <article class="letter" id="our-name" aria-labelledby="letter-title">
-      <div class="letter__head">
-        <p class="letter__kicker">A note on our name</p>
-        <h3 id="letter-title" class="letter__title">One family business. <br>A second name, after two decades.</h3>
-        <ul class="letter__names" aria-label="Our two companies">
-          <li><strong>Nitara India Pvt. Ltd.</strong><span>Garment design &amp; manufacturing, since 2007</span></li>
-          <li><strong>Couture A Craft Pvt. Ltd.</strong><span>Fabric processing, alongside garment production</span></li>
-        </ul>
+    <div class="evolve" id="our-name" role="region" aria-labelledby="evolve-title">
+      <div class="evolve__head">
+        <p class="evolve__kicker">Established &amp; evolving</p>
+        <h3 id="evolve-title" class="evolve__title">Established in 2007. <em>Evolving towards a more sustainable future.</em></h3>
+        <p class="evolve__lead">After nearly two decades, Couture A Craft marks Nitara India’s next chapter: <span class="evolve__gold">more sustainable, vertically integrated manufacturing</span>, with greater in-house control over quality and confidentiality.</p>
       </div>
-      <div class="letter__body">
-        <p>My father set up our family’s garment manufacturing unit in the 1970s. In 2007, we founded Nitara India Pvt. Ltd., bringing together what we learned from him about garment manufacturing, the hand embroidery traditions of our family’s village, and our own approach to design.</p>
-        <p>After nearly two decades of building Nitara India, we wanted more control over what happens to the fabric before it reaches the cutting table. Through Couture A Craft Pvt. Ltd., we’re bringing more fabric processing in house alongside garment production. That lets us check quality earlier, follow it through to the finished garment, and manage water and energy use more closely.</p>
-        <p>Going forward, you’ll see Couture A Craft Pvt. Ltd. on the reports we share for work carried out at that facility. The name on each report tells your team where the work it covers was done.</p>
-        <p class="letter__sign"><span class="letter__signature">Tarun Mittal</span></p>
+
+      <div class="evolve__names" aria-label="Nitara India Pvt. Ltd., established 2007, going forward as Couture A Craft Pvt. Ltd.">
+        <p class="evolve__name"><span>Established 2007</span><strong>Nitara India</strong><small>Pvt. Ltd.</small></p>
+        <div class="evolve__thread" aria-hidden="true"><span class="hand">two decades on</span></div>
+        <p class="evolve__name evolve__name--next"><span>Going forward</span><strong>Couture A Craft</strong><small>Pvt. Ltd.</small></p>
       </div>
-    </article>
+
+      <ul class="evolve__pillars">
+        <li class="pillar">
+          <div class="pillar__top">
+            <svg class="pillar__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28V13l8-5v5l8-5v5l8-5v20z" /><path d="M9 28v-6h5v6M18 18h5M18 22h5" /></svg>
+            <span class="pillar__no">01</span>
+          </div>
+          <h4>In-house control</h4>
+          <p>Design, fabric processing, printing, embroidery and garment manufacturing within our own premises, with in-house testing and quality checks.</p>
+          <p class="pillar__key">No external sharing of original designs or sensitive information.</p>
+        </li>
+        <li class="pillar pillar--lit">
+          <div class="pillar__top">
+            <svg class="pillar__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4c5 7 8 11.5 8 15.5a8 8 0 0 1-16 0C8 15.5 11 11 16 4z" /><path d="M12.5 20.5a3.6 3.6 0 0 0 3.5 3" /></svg>
+            <span class="pillar__no">02</span>
+          </div>
+          <h4>Responsible production</h4>
+          <p class="pillar__stat"><strong>450,000</strong><span>litres of underground water storage</span></p>
+          <ul class="pillar__chips">
+            <li>Solar energy</li><li>Non-fossil fuel steam generation</li><li>Emission controls</li><li>Water-efficient processing</li><li>Effluent treatment</li>
+          </ul>
+        </li>
+        <li class="pillar">
+          <div class="pillar__top">
+            <svg class="pillar__icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="7" cy="16" r="3" /><circle cx="25" cy="8" r="3" /><circle cx="25" cy="24" r="3" /><path d="M10 15l12-6M10 17l12 6M25 11v10" /></svg>
+            <span class="pillar__no">03</span>
+            <span class="pillar__badge">In development</span>
+          </div>
+          <h4>Connected operations</h4>
+          <p>RFID tracking of internal goods movement and AI-assisted team coordination, improving traceability, accountability and the reliability of production information.</p>
+        </li>
+      </ul>
+    </div>
 
     <div class="story__end">
     <blockquote class="pull">
@@ -507,7 +536,7 @@
         </div>
         <div class="reports" data-reveal>
           <h4 class="reports__h">Reports under two names</h4>
-          <p>Reports for work carried out at our fabric processing facility carry the name <strong>Couture A Craft Pvt. Ltd.</strong> The name on each report tells your team where the work was done. One family business, one team. <a href="#our-name">Why we have two names</a></p>
+          <p>Reports for work carried out at our fabric processing facility carry the name <strong>Couture A Craft Pvt. Ltd.</strong> The name on each report tells your team where the work was done. One family business, one team. <a href="#our-name">Our next chapter</a></p>
         </div>
       </div>
     </div>
