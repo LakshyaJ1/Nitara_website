@@ -1270,3 +1270,14 @@ html.menu-open .wa-float, html:has(dialog[open]) .wa-float { opacity: 0; pointer
 }
 @keyframes evolve-thread-v { to { background-position: 0 28px; } }
 @media (prefers-reduced-motion: reduce) { .evolve__thread { animation: none; } .pillar { transition: none; } }
+
+/* v9: Pvt. Ltd. sits a step smaller beside Couture A Craft on the timeline */
+.timeline__ltd { font-size: .62em; white-space: nowrap; }
+
+/* v9: a steady header. Past the top it rides on its own dark bar, slides away only after a
+   deliberate scroll down, and returns on a short scroll up. */
+.nav { will-change: transform; }
+.nav::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: #16130F; border-bottom: 1px solid rgba(223, 161, 44, .2); box-shadow: 0 12px 30px -20px rgba(0, 0, 0, .8); opacity: 0; transition: opacity .35s ease; }
+.nav.is-solid::before { opacity: 1; }
+.nav.is-solid { color: var(--chalk); }
+@media (prefers-reduced-motion: reduce) { .nav, .nav::before { transition: none; } }

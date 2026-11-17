@@ -58,7 +58,7 @@ let lenis = null;
 
 function startSmoothScroll() {
   if (lenis || motion.still || !window.Lenis) return;
-  lenis = new window.Lenis({ lerp: 0.11, smoothWheel: true, wheelMultiplier: 1 });
+  lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.1 });
   if (hasGsap) {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(lenisTick);
@@ -159,26 +159,48 @@ function initHeader() {
   const chapters = $$('[data-chapter], main > section');
   const links = $$('.nav__links a[href*="#"]');
   const lightGrounds = ['ground-manila', 'ground-turmeric', 'ground-ivory'];
-  let lastY = window.scrollY;
+  // The header only changes state after a deliberate run in one direction, so the small
+  // back-and-forth of smooth scrolling and trackpads never makes it flicker.
+  const HIDE_AFTER = 56;
+  const SHOW_AFTER = 28;
+  let lastY = Math.max(0, window.scrollY);
+  let travel = 0;
   let ticking = false;
 
   function update() {
     ticking = false;
-    const y = window.scrollY;
-    nav.classList.toggle('is-hidden', y > lastY && y > window.innerHeight * 0.9 && !root.classList.contains('menu-open'));
+    const y = Math.max(0, window.scrollY);
+    const dy = y - lastY;
     lastY = y;
+    if (dy !== 0) {
+      if ((dy > 0) !== (travel > 0)) travel = 0;
+      travel += dy;
+    }
+    // toggle(name, force) leaves the class attribute alone when nothing changes, so no restyle
+    let hidden = nav.classList.contains('is-hidden');
+    if (y <= window.innerHeight * 0.9 || root.classList.contains('menu-open')) hidden = false;
+    else if (travel > HIDE_AFTER) hidden = true;
+    else if (travel < -SHOW_AFTER) hidden = false;
+    nav.classList.toggle('is-hidden', hidden);
 
-    // ink: what ground sits under the header line?
-    const probe = 36;
-    const under = chapters.find((el) => { const r = el.getBoundingClientRect(); return r.top <= probe && r.bottom > probe; });
-    document.body.dataset.ink = under && lightGrounds.some((c) => under.classList.contains(c)) ? 'dark' : 'light';
+    // past the very top the header sits on its own dark bar, so its ink never flips mid-scroll
+    const solid = y > 40;
+    nav.classList.toggle('is-solid', solid);
+    let ink = 'light';
+    if (!solid) {
+      const probe = 36;
+      const under = chapters.find((el) => { const r = el.getBoundingClientRect(); return r.top <= probe && r.bottom > probe; });
+      if (under && lightGrounds.some((c) => under.classList.contains(c))) ink = 'dark';
+    }
+    if (document.body.dataset.ink !== ink) document.body.dataset.ink = ink;
 
     // current link: the chapter crossing the middle of the viewport
     const middle = window.innerHeight * 0.45;
     const current = chapters.filter((el) => el.getBoundingClientRect().top <= middle).pop();
     links.forEach((a) => {
       const id = a.getAttribute('href').split('#')[1];
-      a.setAttribute('aria-current', current && current.id === id ? 'true' : 'false');
+      const mark = current && current.id === id ? 'true' : 'false';
+      if (a.getAttribute('aria-current') !== mark) a.setAttribute('aria-current', mark);
     });
   }
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
