@@ -16,7 +16,8 @@ The Vercel project `coutureacraft` is connected to this repository, and its **Ro
 | What you want to change | Where |
 |---|---|
 | Home page text and sections | `site/src/pages/index.main.html` |
-| Home page order | Story (timeline, then "Established & evolving": Nitara India → Couture A Craft and three pillars, `#our-name`) → Design Studio (Print Studies column, `#print-studies`) → Craft → Factory (garment floor reel, then the print line 01–04) → Environment & Responsibilities → Collection rail → High Fashion (`#couture`) → Kids (`#kids`) → Clients → Contact |
+| Home page order | Hero (with an "Our story" button to `/story`) → Design Studio (Print Studies column, `#print-studies`) → Craft → Factory (garment floor reel, then the print line 01–04) → Environment & Responsibilities → Collection rail → High Fashion (`#couture`) → Kids (`#kids`) → Clients → Contact |
+| Story page | `/story` (`src/pages/story.main.html`): opening with the pinned watercolour and polaroid, the story chapter (timeline `#timeline`, "Established & evolving" `#our-name`), then links on to the studio, capabilities and contact |
 | Capabilities page | `site/src/pages/capabilities.main.html` + `site/css/capabilities.css` |
 | Print Studio, High Fashion, Kids pages (`/prints`, `/high-fashion`, `/kids`) | `site/src/pages/prints.main.html`, `high-fashion.main.html`, `kids.main.html` + `site/css/studio.css`. Images in `site/img/prints/`, `site/img/high-fashion/`, `site/img/kids/`. The "View all print studies" / "View the full edit" buttons open the shared Google Drive folders. |
 | Header / menu, footer, `<head>` (titles, SEO) | `site/src/partials/` (`nav.html`, `footer.html`, `head.html`) and the page list at the top of `site/tools/build.py` |

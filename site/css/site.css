@@ -1281,3 +1281,75 @@ html.menu-open .wa-float, html:has(dialog[open]) .wa-float { opacity: 0; pointer
 .nav.is-solid::before { opacity: 1; }
 .nav.is-solid { color: var(--chalk); }
 @media (prefers-reduced-motion: reduce) { .nav, .nav::before { transition: none; } }
+
+/* ======================= v10: our story has its own page ======================= */
+
+/* the story page opens on a pinned watercolour and a polaroid of the real thing */
+.story-hero { position: relative; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: clamp(32px, 5vw, 90px); padding: clamp(120px, 16vh, 170px) var(--gutter) clamp(56px, 9vh, 100px); overflow: hidden; }
+.story-hero__kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; font-family: var(--code); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--turmeric); }
+.story-hero__kicker::before { content: ""; width: 34px; height: 2px; background: var(--turmeric); }
+.story-hero__title { margin: 0 0 clamp(34px, 6vh, 56px); font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 5.4rem); line-height: 1; color: var(--chalk); }
+.story-hero__title em { display: block; font-style: normal; color: #E7BE6A; }
+.story-hero__years { position: relative; list-style: none; margin: 0 0 clamp(30px, 5vh, 46px); padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, max-content)); gap: 0 clamp(22px, 3.4vw, 52px); }
+.story-hero__years::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: repeating-linear-gradient(90deg, var(--turmeric) 0 10px, transparent 10px 17px); }
+.story-hero__years li { position: relative; padding-top: 28px; }
+.story-hero__years li::before { content: ""; position: absolute; left: 0; top: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--charcoal); border: 2px solid var(--turmeric); }
+.story-hero__years li:last-child::before { background: var(--turmeric); box-shadow: 0 0 0 5px rgba(223, 161, 44, .22); }
+.story-hero__years a { display: flex; flex-direction: column; text-decoration: none; color: var(--chalk); font-family: var(--display); font-size: clamp(1.05rem, 1.3vw, 1.3rem); line-height: 1.15; transition: color .3s; }
+.story-hero__years a .hand { font-family: "Kalam", cursive; font-size: 1rem; color: var(--turmeric); }
+.story-hero__years a:hover { color: #F6D58E; }
+.story-hero__down { color: var(--chalk); }
+.story-hero__collage { position: relative; width: 100%; max-width: 760px; aspect-ratio: 1.12; justify-self: end; }
+.story-hero__print { position: absolute; left: 0; top: 5%; width: 86%; margin: 0; padding: 14px 14px 18px; background: #FBF7F0; transform: rotate(-2.5deg); box-shadow: 0 40px 60px -30px rgba(0, 0, 0, .85), 0 2px 4px rgba(0, 0, 0, .3); }
+.story-hero__print img { display: block; width: 100%; height: auto; }
+.story-hero__print::before, .story-hero__print::after { content: ""; position: absolute; top: -13px; width: 96px; height: 28px; background: rgba(230, 198, 140, .78); box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
+.story-hero__print::before { left: 9%; transform: rotate(-7deg); }
+.story-hero__print::after { right: 9%; transform: rotate(6deg); }
+.story-hero__polaroid { position: absolute; right: 0; bottom: 0; width: 40%; margin: 0; padding: 10px 10px 44px; background: #fff; transform: rotate(4deg); box-shadow: 0 30px 50px -24px rgba(0, 0, 0, .9), 0 2px 4px rgba(0, 0, 0, .25); }
+.story-hero__polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 30% 45%; }
+.story-hero__polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-size: 1.1rem; color: var(--indigo-ink); }
+.js .story-hero__print { animation: story-pin 1.6s var(--ease) both .15s; }
+.js .story-hero__polaroid { animation: story-drop 1.6s var(--ease) both .45s; }
+@keyframes story-pin { from { opacity: 0; transform: translateY(24px) rotate(-6deg); } to { opacity: 1; transform: rotate(-2.5deg); } }
+@keyframes story-drop { from { opacity: 0; transform: translate(30px, 30px) rotate(11deg); } to { opacity: 1; transform: rotate(4deg); } }
+.still .story-hero__print, .still .story-hero__polaroid { animation: none; }
+@media (prefers-reduced-motion: reduce) { .js .story-hero__print, .js .story-hero__polaroid { animation: none; } }
+@media (max-width: 1000px) {
+  .story-hero { grid-template-columns: 1fr; min-height: 0; padding-top: 120px; }
+  .story-hero__collage { justify-self: start; max-width: 560px; }
+}
+@media (max-width: 560px) {
+  .story-hero__years { grid-template-columns: 1fr; gap: 14px; }
+  .story-hero__years::before { left: 6px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: repeating-linear-gradient(180deg, var(--turmeric) 0 8px, transparent 8px 14px); }
+  .story-hero__years li { padding: 0 0 0 30px; }
+  .story-hero__polaroid { padding-bottom: 34px; }
+}
+
+/* the story page's chapter starts straight at the text: its title is the page's h1 */
+.page-story .story .chapter__body { padding-top: clamp(10px, 2vh, 24px); }
+
+/* where to go next */
+.story-next { padding: clamp(70px, 12vh, 140px) var(--gutter); }
+.story-next__in { max-width: 1240px; margin: 0 auto; }
+.story-next__kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font-family: var(--code); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--madder); }
+.story-next__kicker::before { content: ""; width: 34px; height: 2px; background: var(--madder); }
+.story-next__title { margin: 0 0 clamp(30px, 5vh, 52px); font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.02; color: var(--indigo-ink); }
+.story-next__links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 24px); }
+.story-next__links a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; height: 100%; padding: clamp(22px, 2.4vw, 32px); text-decoration: none; color: var(--indigo-ink); background: rgba(251, 247, 240, .55); border: 1.5px dashed rgba(26, 34, 56, .35); transition: background .4s var(--ease), transform .5s var(--ease); }
+.story-next__links a:hover { background: #FBF7F0; transform: translateY(-4px); }
+.story-next__no { grid-column: 1; font-family: var(--code); font-weight: 700; font-size: .78rem; letter-spacing: .16em; color: var(--madder); }
+.story-next__links strong { grid-column: 1; font-family: var(--display); font-weight: 400; font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.05; }
+.story-next__links small { grid-column: 1; font-size: .92rem; color: #4A3F2F; }
+.story-next__links svg { grid-column: 2; grid-row: 1 / span 3; align-self: center; width: 28px; height: 28px; color: var(--madder); transition: transform .4s var(--ease); }
+.story-next__links a:hover svg { transform: translateX(6px); }
+@media (max-width: 800px) { .story-next__links { grid-template-columns: 1fr; } }
+
+/* v10: Environment & Responsibilities sits on its tag as large as the room allows */
+.conscience .tag__front { container-type: inline-size; padding-left: 8%; padding-right: 8%; }
+.tag__title--long { font-size: 1.45rem; font-size: 13cqi; line-height: 1; }
+
+/* v10: the facts on the back of every tag read at a comfortable size */
+.tag__facts { font-size: .9rem; line-height: 1.32; }
+.tag__facts dt { font-size: .78rem; }
+@media (max-width: 1100px) { .tag__facts { font-size: .86rem; } }
+@media (max-width: 820px) { .chapter__tag .tag { width: min(190px, 50vw); aspect-ratio: 5 / 9; } }

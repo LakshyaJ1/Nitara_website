@@ -37,6 +37,17 @@ PAGES = [
         "body_class": "page-home",
     },
     {
+        "name": "story",
+        "out": "story.html",
+        "path": "/story",
+        "title": "Our Story · Nitara India",
+        "description": "From our father's garment manufacturing facility in the 1970s, to Nitara India in 2007 and Couture A Craft two decades on: a family business built on quality production and village hand embroidery.",
+        "preload": "img/art/adda-hands.webp",
+        "og": "img/hero/poster-handwork-2200.webp",
+        "css": [],
+        "body_class": "page-story",
+    },
+    {
         "name": "capabilities",
         "out": "capabilities.html",
         "path": "/capabilities",
